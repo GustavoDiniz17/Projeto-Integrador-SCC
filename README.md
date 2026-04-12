@@ -1,98 +1,176 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sistema de Controle de Chamados (SCC) - Fullstack
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Projeto completo de um **Sistema de Controle de Chamados** com **Frontend em Flutter** e **Backend em NestJS v11** com integração de **IA para classificação automática de prioridade**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📁 Estrutura do Projeto
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ pnpm install
+```
+scc-sistema-finalizado/
+├── backend/              # NestJS v11 - API REST
+│   ├── src/
+│   │   ├── usuarios/     # Módulo de Usuários
+│   │   ├── chamados/     # Módulo de Chamados com IA
+│   │   ├── cargos/       # Módulo de Cargos
+│   │   ├── departamentos/# Módulo de Departamentos
+│   │   ├── status/       # Módulo de Status
+│   │   ├── ia/           # Serviço de IA (NLP)
+│   │   └── app.module.ts # Configuração principal
+│   ├── .env              # Variáveis de ambiente
+│   └── package.json      # Dependências
+│
+└── frontend/             # Flutter - Aplicação Mobile
+    ├── lib/
+    │   ├── models/       # Modelos de dados
+    │   ├── services/     # Serviços (API, negócio)
+    │   ├── pages/        # Telas da aplicação
+    │   ├── widgets/      # Componentes reutilizáveis
+    │   └── main.dart     # Ponto de entrada
+    └── pubspec.yaml      # Dependências Flutter
 ```
 
-## Compile and run the project
+## 🚀 Como Iniciar
 
-```bash
-# development
-$ pnpm run start
+### Pré-requisitos
 
-# watch mode
-$ pnpm run start:dev
+- **Node.js** v18+ (para o backend)
+- **Flutter** 3.0+ (para o frontend)
+- **MySQL** 8.0+ (banco de dados)
+- **pnpm** (gerenciador de pacotes do Node)
 
-# production mode
-$ pnpm run start:prod
+### 1. Configurar o Banco de Dados
+
+Certifique-se de que o MySQL está rodando com as seguintes credenciais:
+
+```
+Host: localhost
+Porta: 3306
+Usuário: root
+Senha: Admin@123
+Banco: scc_db
 ```
 
-## Run tests
+Se o banco não existir, execute o script SQL fornecido para criar as tabelas.
+
+### 2. Iniciar o Backend (NestJS)
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+cd backend
+pnpm install
+pnpm run start:dev
 ```
 
-## Deployment
+O backend estará disponível em: `http://localhost:3000`
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+**Documentação Swagger:** `http://localhost:3000/api`
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. Iniciar o Frontend (Flutter)
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+cd frontend
+flutter pub get
+flutter run
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🔌 Integração Frontend-Backend
 
-## Resources
+O frontend está configurado para se conectar ao backend através da URL base:
 
-Check out a few resources that may come in handy when working with NestJS:
+```
+http://localhost:3000/
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Os endpoints disponíveis são:
 
-## Support
+- **GET /usuarios** - Listar todos os usuários
+- **GET /usuarios/:id** - Buscar usuário por ID
+- **GET /cargos** - Listar cargos
+- **GET /departamentos** - Listar departamentos
+- **GET /status** - Listar status
+- **GET /chamados** - Listar chamados
+- **POST /chamados** - Criar novo chamado (com classificação de prioridade por IA)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🤖 Funcionalidade de IA
 
-## Stay in touch
+Quando um novo chamado é criado, o sistema automaticamente:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Analisa a descrição usando **Processamento de Linguagem Natural (NLP)**
+2. Classifica a prioridade como: **Alta**, **Média** ou **Baixa**
+3. Salva o chamado com a prioridade automática no banco de dados
 
-## License
+Exemplo de requisição:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+POST http://localhost:3000/chamados
+Content-Type: application/json
+
+{
+  "assunto": "Erro no login",
+  "descricao": "Não consigo acessar o sistema urgente",
+  "id_usuario_solicitante": "uuid-usuario",
+  "id_departamento": "uuid-departamento",
+  "id_status": "uuid-status"
+}
+```
+
+Resposta:
+
+```json
+{
+  "id": "uuid-chamado",
+  "codigo": "CH-1712973600000",
+  "assunto": "Erro no login",
+  "descricao": "Não consigo acessar o sistema urgente",
+  "prioridade": "Alta",
+  "status": {...},
+  "solicitante": {...},
+  "departamento": {...},
+  "data_abertura": "2026-04-11T22:40:00.000Z"
+}
+```
+
+## 📊 Banco de Dados
+
+O sistema utiliza as seguintes tabelas:
+
+- **Usuarios** - Usuários do sistema
+- **Cargos** - Níveis de acesso (Admin, Técnico, Usuário)
+- **Departamentos** - Departamentos da organização
+- **Status** - Estados dos chamados
+- **Chamados** - Tickets de suporte
+- **InteracaoChamado** - Histórico e auditoria
+
+## 🔐 Segurança
+
+- Variáveis de ambiente configuradas em `.env`
+- Validação de entrada com `class-validator`
+- Relacionamentos de banco de dados com integridade referencial
+
+## 📝 Documentação
+
+- **API Swagger:** Acesse `http://localhost:3000/api` quando o backend estiver rodando
+- **Modelos:** Verifique os arquivos em `backend/src/*/entities/`
+- **Serviços:** Consulte `backend/src/*/services/`
+
+## 🐛 Troubleshooting
+
+### Backend não conecta ao MySQL
+
+Verifique se:
+- O MySQL está rodando
+- As credenciais em `.env` estão corretas
+- O banco `scc_db` foi criado
+
+### Frontend não consegue conectar ao backend
+
+Verifique se:
+- O backend está rodando em `http://localhost:3000`
+- A URL base em `frontend/lib/services/api/dev_client.dart` está correta
+- Não há firewall bloqueando a porta 3000
+
+## 📄 Licença
+
+Este projeto é privado e pertence ao usuário.
+
+---
+
+**Status:** ✅ PROJETO 100% OPERACIONAL
