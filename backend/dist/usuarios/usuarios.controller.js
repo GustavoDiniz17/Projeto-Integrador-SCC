@@ -16,6 +16,7 @@ exports.UsuariosController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const usuarios_service_1 = require("./usuarios.service");
+const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 let UsuariosController = class UsuariosController {
     usuariosService;
     constructor(usuariosService) {
@@ -40,6 +41,8 @@ let UsuariosController = class UsuariosController {
 exports.UsuariosController = UsuariosController;
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Listar todos os usuários' }),
     (0, swagger_1.ApiQuery)({ name: 'ativo', required: false, type: Boolean }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Lista de usuários retornada com sucesso' }),
@@ -50,6 +53,8 @@ __decorate([
 ], UsuariosController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('departamento/:idDepartamento'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Buscar usuários por departamento' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Usuários encontrados' }),
     __param(0, (0, common_1.Param)('idDepartamento')),
@@ -59,6 +64,8 @@ __decorate([
 ], UsuariosController.prototype, "findByDepartamento", null);
 __decorate([
     (0, common_1.Get)('cargo/:idCargo'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Buscar usuários por cargo' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Usuários encontrados' }),
     __param(0, (0, common_1.Param)('idCargo')),
@@ -68,6 +75,8 @@ __decorate([
 ], UsuariosController.prototype, "findByCargo", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Buscar usuário por ID' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Usuário encontrado' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Usuário não encontrado' }),

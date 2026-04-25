@@ -1,0 +1,1 @@
+ C:\\Users\\Gusta\\Desktop\\scc-sistema-finalizado\\frontend\\build\\5635a3ae0e49146313cba34bd582619b\\dart_build_result.json: 

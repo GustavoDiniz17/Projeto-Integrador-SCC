@@ -8,6 +8,7 @@ import { CargosModule } from './cargos/cargos.module';
 import { DepartamentosModule } from './departamentos/departamentos.module';
 import { StatusModule } from './status/status.module';
 import { ChamadosModule } from './chamados/chamados.module';
+import { AuthModule } from './auth/auth.module'; // ← ADICIONE ESTA LINHA
 
 @Module({
   imports: [
