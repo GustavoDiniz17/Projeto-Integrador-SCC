@@ -17,6 +17,7 @@ const cargos_module_1 = require("./cargos/cargos.module");
 const departamentos_module_1 = require("./departamentos/departamentos.module");
 const status_module_1 = require("./status/status.module");
 const chamados_module_1 = require("./chamados/chamados.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -44,6 +45,7 @@ exports.AppModule = AppModule = __decorate([
             departamentos_module_1.DepartamentosModule,
             status_module_1.StatusModule,
             chamados_module_1.ChamadosModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

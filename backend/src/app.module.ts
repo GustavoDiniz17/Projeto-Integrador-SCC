@@ -8,7 +8,7 @@ import { CargosModule } from './cargos/cargos.module';
 import { DepartamentosModule } from './departamentos/departamentos.module';
 import { StatusModule } from './status/status.module';
 import { ChamadosModule } from './chamados/chamados.module';
-import { AuthModule } from './auth/auth.module'; // ← ADICIONE ESTA LINHA
+import { AuthModule } from './auth/auth.module'; 
 
 @Module({
   imports: [
@@ -33,6 +33,7 @@ import { AuthModule } from './auth/auth.module'; // ← ADICIONE ESTA LINHA
     DepartamentosModule,
     StatusModule,
     ChamadosModule,
+     AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
