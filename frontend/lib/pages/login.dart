@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador/routes.dart';
+import 'package:projeto_integrador/services/auth_service.dart';
 import 'package:projeto_integrador/widgets/custom_button.dart';
 import 'package:projeto_integrador/widgets/custom_text_form_field.dart';
 
@@ -13,13 +14,15 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _emailLoginController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  
+  final TextEditingController _emailContatoController = TextEditingController();
   final TextEditingController _assuntoController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
 
   bool _mostrarSenha = false;
+  bool _loading = false;
 
   @override
   void initState() {
@@ -30,7 +33,47 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _tabController.dispose();
+    _emailLoginController.dispose();
+    _senhaController.dispose();
+    _emailContatoController.dispose();
+    _assuntoController.dispose();
+    _descricaoController.dispose();
     super.dispose();
+  }
+
+  void _handleLogin() async {
+    if (_emailLoginController.text.isEmpty || _senhaController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+      return;
+    }
+
+    setState(() => _loading = true);
+
+    try {
+      await AuthService().login(
+        _emailLoginController.text,
+        _senhaController.text,
+      );
+      
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, PageRoutes.home);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _loading = false);
+      }
+    }
   }
 
   @override
@@ -51,7 +94,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TabBar(
-                  splashBorderRadius: BorderRadius.only(
+                  splashBorderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
@@ -76,9 +119,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomTextFormField(
-                              controller: _loginController,
-                              labelText: "Login",
-                              prefixIcon: Icon(Icons.person_outline),
+                              controller: _emailLoginController,
+                              labelText: "E-mail",
+                              prefixIcon: const Icon(Icons.email_outlined),
                             ),
                             const SizedBox(height: 16),
                             CustomTextFormField(
@@ -87,7 +130,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                               labelText: "Senha",
                               prefixIcon: const Icon(Icons.lock_outline),
                               suffixIcon: IconButton(
-                                color: Color(0xFF6750A4),
+                                color: const Color(0xFF6750A4),
                                 icon: Icon(
                                   _mostrarSenha
                                       ? Icons.visibility_off_outlined
@@ -101,14 +144,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                               ),
                             ),
                             const SizedBox(height: 24),
-                            CustomButton(
-                              width: double.infinity,
-                              icon: const Icon(Icons.login),
-                              label: const Text("Entrar"),
-                              onPressed: () {
-                                Navigator.pushNamed(context, PageRoutes.home);
-                              },
-                            ),
+                            _loading
+                                ? const CircularProgressIndicator()
+                                : CustomButton(
+                                    width: double.infinity,
+                                    icon: const Icon(Icons.login),
+                                    label: const Text("Entrar"),
+                                    onPressed: _handleLogin,
+                                  ),
                           ],
                         ),
                       ),
@@ -120,7 +163,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           child: Column(
                             children: [
                               TextField(
-                                controller: _emailController,
+                                controller: _emailContatoController,
                                 decoration: const InputDecoration(
                                   labelText: "E-mail de contato",
                                   prefixIcon: Icon(Icons.email_outlined),
@@ -152,7 +195,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                                 width: double.infinity,
                                 icon: const Icon(Icons.send_outlined),
                                 label: const Text("Enviar Chamado"),
-                                onPressed: () {},
+                                onPressed: () {
+                                  // Lógica para criar chamado anônimo ou público
+                                },
                               ),
                             ],
                           ),
