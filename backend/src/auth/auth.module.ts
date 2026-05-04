@@ -1,19 +1,24 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { Usuario, UsuarioSchema } from '../usuarios/entities/usuario.schema';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { Usuario } from '../usuarios/entities/usuario.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Usuario]),
+    MongooseModule.forFeature([{ name: Usuario.name, schema: UsuarioSchema }]),
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET || 'seu-secret-key-super-seguro',
-      signOptions: { expiresIn: '24h' },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET') || 'secretKey',
+        signOptions: { expiresIn: '24h' },
+      }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],

@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Usuario } from '../usuarios/entities/usuario.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Usuario, UsuarioDocument } from '../usuarios/entities/usuario.schema';
 import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
@@ -11,17 +11,17 @@ import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(Usuario)
-    private usuarioRepository: Repository<Usuario>,
+    @InjectModel(Usuario.name) private usuarioModel: Model<UsuarioDocument>,
     private jwtService: JwtService,
   ) {}
 
   async login(loginDto: LoginDto) {
-    const usuario = await this.usuarioRepository.findOne({
-      where: { email: loginDto.email },
-      relations: ['cargo', 'departamento'],
-      select: ['id', 'nome', 'email', 'senha', 'cargo', 'departamento', 'ativo'],
-    });
+    const usuario = await this.usuarioModel
+      .findOne({ email: loginDto.email })
+      .select('+senha')
+      .populate('id_cargo')
+      .populate('id_departamento')
+      .exec();
 
     if (!usuario) {
       throw new UnauthorizedException('Email ou senha inválidos');
@@ -36,12 +36,14 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha inválidos');
     }
 
+    const cargo: any = usuario.id_cargo;
+
     const payload = {
       id: usuario.id,
       email: usuario.email,
       nome: usuario.nome,
-      cargo: usuario.cargo.descricao,
-      nivel_acesso: usuario.cargo.nivel_acesso,
+      cargo: cargo?.descricao,
+      nivel_acesso: cargo?.nivel_acesso,
     };
 
     return {
@@ -50,19 +52,18 @@ export class AuthService {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
-        cargo: usuario.cargo,
-        departamento: usuario.departamento,
+        cargo: usuario.id_cargo,
+        departamento: usuario.id_departamento,
       },
     };
   }
 
   async createUser(createUserDto: CreateUserDto, usuarioLogado: any) {
-    // Apenas Admin pode criar usuários
     if (usuarioLogado.nivel_acesso !== 'Admin') {
       throw new UnauthorizedException('Apenas administradores podem criar usuários');
     }
 
-    const usuarioExistente = await this.usuarioRepository.findOneBy({
+    const usuarioExistente = await this.usuarioModel.findOne({
       email: createUserDto.email,
     });
 
@@ -72,7 +73,7 @@ export class AuthService {
 
     const senhaHash = await bcrypt.hash(createUserDto.senha, 10);
 
-    const novoUsuario = this.usuarioRepository.create({
+    const novoUsuario = new this.usuarioModel({
       id: uuidv4(),
       nome: createUserDto.nome,
       email: createUserDto.email,
@@ -82,15 +83,14 @@ export class AuthService {
       ativo: true,
     });
 
-    return await this.usuarioRepository.save(novoUsuario);
+    return await novoUsuario.save();
   }
 
   async validateUser(id: string): Promise<Usuario | null> {
-  const usuario = await this.usuarioRepository.findOne({
-    where: { id },
-    relations: ['cargo', 'departamento'],
-  });
-  
-  return usuario; // Agora o TS entende que pode retornar Usuario ou null
-}
+    return await this.usuarioModel
+      .findOne({ id })
+      .populate('id_cargo')
+      .populate('id_departamento')
+      .exec();
+  }
 }

@@ -1,24 +1,27 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Cargo } from './entities/cargo.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Cargo, CargoDocument } from './entities/cargo.schema';
 
 @Injectable()
 export class CargosService {
   constructor(
-    @InjectRepository(Cargo)
-    private cargoRepository: Repository<Cargo>,
+    @InjectModel(Cargo.name) private cargoModel: Model<CargoDocument>,
   ) {}
 
   async findAll() {
-    return await this.cargoRepository.find();
+    return await this.cargoModel.find().exec();
   }
 
   async findOne(id: string) {
-    return await this.cargoRepository.findOneBy({ id });
+    const cargo = await this.cargoModel.findOne({ id }).exec();
+    if (!cargo) {
+      throw new NotFoundException(`Cargo com ID ${id} não encontrado`);
+    }
+    return cargo;
   }
 
   async findByNivelAcesso(nivelAcesso: string) {
-    return await this.cargoRepository.findBy({ nivel_acesso: nivelAcesso });
+    return await this.cargoModel.find({ nivel_acesso: nivelAcesso }).exec();
   }
 }

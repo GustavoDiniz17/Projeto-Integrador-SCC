@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { CargosService } from './cargos.service';
 import { CargosController } from './cargos.controller';
-import { Cargo } from './entities/cargo.entity';
+import { Cargo, CargoSchema } from './entities/cargo.schema';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Cargo])],
+  imports: [
+    MongooseModule.forFeature([{ name: Cargo.name, schema: CargoSchema }]),
+  ],
   controllers: [CargosController],
   providers: [CargosService],
   exports: [CargosService],

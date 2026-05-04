@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ChamadosService } from './chamados.service';
 import { ChamadosController } from './chamados.controller';
-import { Chamado } from './entities/chamado.entity';
-import { IaService } from '../ia/ia.service';
+import { Chamado, ChamadoSchema } from './entities/chamado.schema';
+import { IAService } from '../ia/ia.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Chamado])],
+  imports: [
+    MongooseModule.forFeature([{ name: Chamado.name, schema: ChamadoSchema }]),
+  ],
   controllers: [ChamadosController],
-  providers: [ChamadosService, IaService],
-  exports: [ChamadosService],
+  providers: [ChamadosService, IAService],
 })
 export class ChamadosModule {}
