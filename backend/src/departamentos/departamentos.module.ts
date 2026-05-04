@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { DepartamentosService } from './departamentos.service';
 import { DepartamentosController } from './departamentos.controller';
-import { Departamento } from './entities/departamento.entity';
+import { Departamento, DepartamentoSchema } from './entities/departamento.schema';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Departamento])],
+  imports: [
+    MongooseModule.forFeature([{ name: Departamento.name, schema: DepartamentoSchema }]),
+  ],
   controllers: [DepartamentosController],
   providers: [DepartamentosService],
   exports: [DepartamentosService],
