@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Chamado, ChamadoDocument } from './entities/chamado.schema';
 import { CreateChamadoDto } from './dto/create-chamado.dto';
+import { UpdateChamadoDto } from './dto/update-chamado.dto';
 import { IAService } from '../ia/ia.service';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -67,5 +68,25 @@ export class ChamadosService {
       .populate('id_usuario_solicitante')
       .populate('id_departamento')
       .exec();
+  }
+
+  async update(id: string, updateChamadoDto: UpdateChamadoDto) {
+    const chamado = await this.chamadoModel
+      .findOneAndUpdate({ id }, updateChamadoDto, { new: true })
+      .exec();
+
+    if (!chamado) {
+      throw new NotFoundException(`Chamado com ID ${id} não encontrado`);
+    }
+
+    return chamado;
+  }
+
+  async remove(id: string) {
+    const result = await this.chamadoModel.deleteOne({ id }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException(`Chamado com ID ${id} não encontrado`);
+    }
+    return { message: 'Chamado removido com sucesso' };
   }
 }
