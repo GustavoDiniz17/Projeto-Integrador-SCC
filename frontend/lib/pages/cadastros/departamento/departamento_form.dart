@@ -52,7 +52,7 @@ class _DepartamentoFormState extends State<DepartamentoForm> {
 
   @override
   void initState() {
-    fetchDepartamentos();
+    fetchDepartamentosBackEnd();
     super.initState();
   }
 
@@ -127,7 +127,32 @@ class _DepartamentoFormState extends State<DepartamentoForm> {
               backgroundColor: Theme.of(
                 context,
               ).extension<SecundaryButtonTheme>()?.newButtonColor,
-              onPressed: () {},
+              onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  try {
+                    setState(() => appIsLoading = true);
+                    if (widget.idDepartamento != null) {
+                      await departamentoService.updateDepartamento(departamento);
+                    } else {
+                      await departamentoService.postDepartamento(departamento);
+                    }
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Salvo com sucesso!')),
+                      );
+                      Navigator.pop(context, true);
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Erro ao salvar: $e')),
+                      );
+                    }
+                  } finally {
+                    if (mounted) setState(() => appIsLoading = false);
+                  }
+                }
+              },
             ),
             CustomButton(
               icon: const Icon(Icons.cancel_outlined),

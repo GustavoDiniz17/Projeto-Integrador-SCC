@@ -33,25 +33,28 @@ class DepartamentosService {
   Future<DepartamentoModel> getDepartamentoId(String id) async {
     DevClient client = DevClient();
 
-    ApiResponse response = await client.get(endpoint: '${endpoint}id');
+    ApiResponse response = await client.get(endpoint: '$endpoint/$id');
 
     if (response.statusCode > 299) {
-      throw HttpException(response.body['message'].join('\n'));
+      throw HttpException(response.body['message'] is List 
+          ? response.body['message'].join('\n') 
+          : response.body['message'].toString());
     }
 
-    return DepartamentoModel.fromJson(response.body['data']);
+    return DepartamentoModel.fromJson(response.body);
   }
 
   Future<bool> deleteDepartamento(String id) async {
     DevClient client = DevClient();
 
     ApiResponse response = await client.delete(
-      endpoint: endpoint,
-      filters: {'id': id},
+      endpoint: '$endpoint/$id',
     );
 
     if (response.statusCode > 299) {
-      throw HttpException(response.body['message'].join('\n'));
+      throw HttpException(response.body['message'] is List 
+          ? response.body['message'].join('\n') 
+          : response.body['message'].toString());
     }
     return true;
   }
@@ -59,13 +62,15 @@ class DepartamentosService {
   Future<void> updateDepartamento(DepartamentoModel departamento) async {
     DevClient client = DevClient();
 
-    ApiResponse response = await client.put(
-      endpoint: endpoint,
+    ApiResponse response = await client.patch(
+      endpoint: '$endpoint/${departamento.id}',
       data: departamento.toJson(),
     );
 
     if (response.statusCode > 299) {
-      throw HttpException(response.body['message'].join('\n'));
+      throw HttpException(response.body['message'] is List 
+          ? response.body['message'].join('\n') 
+          : response.body['message'].toString());
     }
   }
 
