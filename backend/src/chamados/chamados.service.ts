@@ -15,7 +15,7 @@ export class ChamadosService {
   ) {}
 
   async create(createChamadoDto: CreateChamadoDto, usuarioId: string) {
-    const prioridade = this.iaService.classificarPrioridade(createChamadoDto.descricao);
+    const prioridade = this.iaService.classifyPriority(createChamadoDto.descricao);
     const codigo = `CH-${Date.now()}`;
 
     const novoChamado = new this.chamadoModel({
