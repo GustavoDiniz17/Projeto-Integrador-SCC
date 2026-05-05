@@ -4,14 +4,14 @@ import { Model } from 'mongoose';
 import { Chamado, ChamadoDocument } from './entities/chamado.schema';
 import { CreateChamadoDto } from './dto/create-chamado.dto';
 import { UpdateChamadoDto } from './dto/update-chamado.dto';
-import { IAService } from '../ia/ia.service';
+import { IaService } from '../ia/ia.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ChamadosService {
   constructor(
     @InjectModel(Chamado.name) private chamadoModel: Model<ChamadoDocument>,
-    private iaService: IAService,
+    private iaService: IaService,
   ) {}
 
   async create(createChamadoDto: CreateChamadoDto, usuarioId: string) {
