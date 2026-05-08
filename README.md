@@ -71,7 +71,7 @@ flutter run
 O banco de dados foi inicializado com um usuário administrador para o primeiro acesso:
 
 - **Email**: `supremo@scc.com`
-- **Senha**: `Supremo123!`
+- **Senha**: `Supremo123`
 - **Permissão**: ADMIN (Acesso total para criar outros usuários e gerenciar o sistema)
 
 ## 🛠️ Auditoria de QA e Correções Recentes
