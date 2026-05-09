@@ -29,7 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
       final chamados = await _chamadosService.getChamados();
       setState(() {
         totalChamados = chamados.length;
-        chamadosAbertos = chamados.where((c) => c.status.descricao == 'Pendente').length;
+        chamadosAbertos = chamados.where((c) => c.status?.descricao == 'Pendente').length;
         appIsLoading = false;
       });
     } catch (e) {
