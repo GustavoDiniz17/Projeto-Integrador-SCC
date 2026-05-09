@@ -62,3 +62,4 @@ $ nest start
 🚀 Application is running on: http://localhost:3000
 IA Classificou: "Não consigo me conectar à VPN da empresa para trabalhar remotamente. Aparece erro de autenticação." -> Alta
 IA Classificou: "Não consigo me conectar à VPN da empresa para trabalhar remotamente. Aparece erro de autenticação." -> Alta
+IA Classificou: "Este é um teste para garantir que o dado enviado pelo frontend chega ao banco e volta para a listagem." -> Alta
