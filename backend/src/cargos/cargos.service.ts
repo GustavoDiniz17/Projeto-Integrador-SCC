@@ -24,4 +24,27 @@ export class CargosService {
   async findByNivelAcesso(nivelAcesso: string) {
     return await this.cargoModel.find({ nivel_acesso: nivelAcesso }).exec();
   }
+
+  async create(createCargoDto: any) {
+    const novo = new this.cargoModel(createCargoDto);
+    return await novo.save();
+  }
+
+  async update(id: string, updateCargoDto: any) {
+    const cargo = await this.cargoModel
+      .findOneAndUpdate({ id }, updateCargoDto, { new: true })
+      .exec();
+    if (!cargo) {
+      throw new NotFoundException(`Cargo com ID ${id} não encontrado`);
+    }
+    return cargo;
+  }
+
+  async remove(id: string) {
+    const result = await this.cargoModel.deleteOne({ id }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException(`Cargo com ID ${id} não encontrado`);
+    }
+    return { message: 'Cargo removido com sucesso' };
+  }
 }

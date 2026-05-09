@@ -1,11 +1,20 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { DepartamentosService } from './departamentos.service';
+import { CreateDepartamentoDto } from './dto/create-departamento.dto';
+import { UpdateDepartamentoDto } from './dto/update-departamento.dto';
 
 @ApiTags('Departamentos')
 @Controller('departamentos')
 export class DepartamentosController {
   constructor(private readonly departamentosService: DepartamentosService) {}
+
+  @Post()
+  @ApiOperation({ summary: 'Criar novo departamento' })
+  @ApiResponse({ status: 201, description: 'Departamento criado com sucesso' })
+  create(@Body() createDepartamentoDto: CreateDepartamentoDto) {
+    return this.departamentosService.create(createDepartamentoDto);
+  }
 
   @Get()
   @ApiOperation({ summary: 'Listar todos os departamentos' })
@@ -24,5 +33,19 @@ export class DepartamentosController {
   @ApiResponse({ status: 404, description: 'Departamento não encontrado' })
   findOne(@Param('id') id: string) {
     return this.departamentosService.findOne(id);
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Atualizar departamento' })
+  @ApiResponse({ status: 200, description: 'Departamento atualizado com sucesso' })
+  update(@Param('id') id: string, @Body() updateDepartamentoDto: UpdateDepartamentoDto) {
+    return this.departamentosService.update(id, updateDepartamentoDto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Remover departamento' })
+  @ApiResponse({ status: 200, description: 'Departamento removido com sucesso' })
+  remove(@Param('id') id: string) {
+    return this.departamentosService.remove(id);
   }
 }
