@@ -19,8 +19,8 @@ export class AuthService {
     const usuario = await this.usuarioModel
       .findOne({ email: loginDto.email })
       .select('+senha')
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
 
     if (!usuario) {
@@ -36,8 +36,7 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha inválidos');
     }
 
-    const cargo: any = usuario.id_cargo;
-
+    const cargo: any = (usuario as any).cargo;
     const payload = {
       id: usuario.id,
       email: usuario.email,
@@ -52,8 +51,8 @@ export class AuthService {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
-        cargo: usuario.id_cargo,
-        departamento: usuario.id_departamento,
+        cargo: (usuario as any).cargo,
+        departamento: (usuario as any).departamento,
       },
     };
   }
@@ -72,7 +71,6 @@ export class AuthService {
     }
 
     const senhaHash = await bcrypt.hash(createUserDto.senha, 10);
-
     const novoUsuario = new this.usuarioModel({
       id: uuidv4(),
       nome: createUserDto.nome,
@@ -89,8 +87,8 @@ export class AuthService {
   async validateUser(id: string): Promise<Usuario | null> {
     return await this.usuarioModel
       .findOne({ id })
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
   }
 }

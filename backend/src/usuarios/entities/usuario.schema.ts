@@ -1,11 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document } from 'mongoose';
 import { Cargo } from '../../cargos/entities/cargo.schema';
 import { Departamento } from '../../departamentos/entities/departamento.schema';
 
 export type UsuarioDocument = Usuario & Document;
 
-@Schema({ collection: 'Usuarios' })
+@Schema({ 
+  collection: 'Usuarios',
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
 export class Usuario {
   @Prop({ required: true, unique: true })
   id: string;
@@ -19,18 +23,28 @@ export class Usuario {
   @Prop({ required: true, select: false })
   senha: string;
 
-  @Prop({ type: String, ref: 'Cargo', required: true })
+  @Prop({ required: true })
   id_cargo: string;
 
-  @Prop({ type: String, ref: 'Departamento' })
+  @Prop()
   id_departamento: string;
 
   @Prop({ default: true })
   ativo: boolean;
-
-  // Campos virtuais ou populados para manter compatibilidade com a lógica anterior
-  cargo?: Cargo;
-  departamento?: Departamento;
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);
+
+UsuarioSchema.virtual('cargo', {
+  ref: 'Cargo',
+  localField: 'id_cargo',
+  foreignField: 'id',
+  justOne: true
+});
+
+UsuarioSchema.virtual('departamento', {
+  ref: 'Departamento',
+  localField: 'id_departamento',
+  foreignField: 'id',
+  justOne: true
+});
