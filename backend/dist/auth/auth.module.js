@@ -23,11 +23,11 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: usuario_schema_1.Usuario.name, schema: usuario_schema_1.UsuarioSchema }]),
-            passport_1.PassportModule,
+            passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: async (configService) => ({
-                    secret: configService.get('JWT_SECRET') || 'secretKey',
+                    secret: configService.get('JWT_SECRET') || 'sua-chave-secreta-super-segura-aqui',
                     signOptions: { expiresIn: '24h' },
                 }),
                 inject: [config_1.ConfigService],

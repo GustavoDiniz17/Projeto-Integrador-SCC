@@ -17,7 +17,6 @@ export class ChamadosService {
   async create(createChamadoDto: CreateChamadoDto, usuarioId: string) {
     const prioridade = this.iaService.classifyPriority(createChamadoDto.descricao);
     const codigo = `CH-${Date.now()}`;
-
     const novoChamado = new this.chamadoModel({
       id: uuidv4(),
       codigo,
@@ -25,27 +24,25 @@ export class ChamadosService {
       prioridade,
       id_usuario_solicitante: usuarioId,
     });
-
     return await novoChamado.save();
   }
 
   async findAll() {
     return await this.chamadoModel
       .find()
-      .populate('id_status')
-      .populate('id_usuario_solicitante')
-      .populate('id_departamento')
+      .populate('status')
+      .populate('solicitante')
+      .populate('departamento')
       .exec();
   }
 
   async findOne(id: string) {
     const chamado = await this.chamadoModel
       .findOne({ id })
-      .populate('id_status')
-      .populate('id_usuario_solicitante')
-      .populate('id_departamento')
+      .populate('status')
+      .populate('solicitante')
+      .populate('departamento')
       .exec();
-
     if (!chamado) {
       throw new NotFoundException(`Chamado com ID ${id} não encontrado`);
     }
@@ -55,18 +52,18 @@ export class ChamadosService {
   async findByUsuario(idUsuario: string) {
     return await this.chamadoModel
       .find({ id_usuario_solicitante: idUsuario })
-      .populate('id_status')
-      .populate('id_usuario_solicitante')
-      .populate('id_departamento')
+      .populate('status')
+      .populate('solicitante')
+      .populate('departamento')
       .exec();
   }
 
   async findByDepartamento(idDepartamento: string) {
     return await this.chamadoModel
       .find({ id_departamento: idDepartamento })
-      .populate('id_status')
-      .populate('id_usuario_solicitante')
-      .populate('id_departamento')
+      .populate('status')
+      .populate('solicitante')
+      .populate('departamento')
       .exec();
   }
 
@@ -74,11 +71,9 @@ export class ChamadosService {
     const chamado = await this.chamadoModel
       .findOneAndUpdate({ id }, updateChamadoDto, { new: true })
       .exec();
-
     if (!chamado) {
       throw new NotFoundException(`Chamado com ID ${id} não encontrado`);
     }
-
     return chamado;
   }
 

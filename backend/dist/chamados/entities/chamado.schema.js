@@ -20,9 +20,6 @@ let Chamado = class Chamado {
     id_status;
     id_usuario_solicitante;
     id_departamento;
-    status;
-    solicitante;
-    departamento;
 };
 exports.Chamado = Chamado;
 __decorate([
@@ -46,19 +43,42 @@ __decorate([
     __metadata("design:type", String)
 ], Chamado.prototype, "prioridade", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, ref: 'Status', required: true }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Chamado.prototype, "id_status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, ref: 'Usuario', required: true }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Chamado.prototype, "id_usuario_solicitante", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: String, ref: 'Departamento', required: true }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Chamado.prototype, "id_departamento", void 0);
 exports.Chamado = Chamado = __decorate([
-    (0, mongoose_1.Schema)({ collection: 'Chamados', timestamps: { createdAt: 'data_abertura', updatedAt: 'data_atualizacao' } })
+    (0, mongoose_1.Schema)({
+        collection: 'Chamados',
+        timestamps: { createdAt: 'data_abertura', updatedAt: 'data_atualizacao' },
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
+    })
 ], Chamado);
 exports.ChamadoSchema = mongoose_1.SchemaFactory.createForClass(Chamado);
+exports.ChamadoSchema.virtual('status', {
+    ref: 'Status',
+    localField: 'id_status',
+    foreignField: 'id',
+    justOne: true
+});
+exports.ChamadoSchema.virtual('solicitante', {
+    ref: 'Usuario',
+    localField: 'id_usuario_solicitante',
+    foreignField: 'id',
+    justOne: true
+});
+exports.ChamadoSchema.virtual('departamento', {
+    ref: 'Departamento',
+    localField: 'id_departamento',
+    foreignField: 'id',
+    justOne: true
+});
 //# sourceMappingURL=chamado.schema.js.map

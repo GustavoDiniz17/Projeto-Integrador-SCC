@@ -1,12 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Status } from '../../status/entities/status.schema';
-import { Usuario } from '../../usuarios/entities/usuario.schema';
-import { Departamento } from '../../departamentos/entities/departamento.schema';
 
 export type ChamadoDocument = Chamado & Document;
 
-@Schema({ collection: 'Chamados', timestamps: { createdAt: 'data_abertura', updatedAt: 'data_atualizacao' } })
+@Schema({ 
+  collection: 'Chamados', 
+  timestamps: { createdAt: 'data_abertura', updatedAt: 'data_atualizacao' },
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
 export class Chamado {
   @Prop({ required: true, unique: true })
   id: string;
@@ -23,19 +25,35 @@ export class Chamado {
   @Prop({ required: true })
   prioridade: string;
 
-  @Prop({ type: String, ref: 'Status', required: true })
+  @Prop({ required: true })
   id_status: string;
 
-  @Prop({ type: String, ref: 'Usuario', required: true })
+  @Prop({ required: true })
   id_usuario_solicitante: string;
 
-  @Prop({ type: String, ref: 'Departamento', required: true })
+  @Prop({ required: true })
   id_departamento: string;
-
-  // Campos para população
-  status?: Status;
-  solicitante?: Usuario;
-  departamento?: Departamento;
 }
 
 export const ChamadoSchema = SchemaFactory.createForClass(Chamado);
+
+ChamadoSchema.virtual('status', {
+  ref: 'Status',
+  localField: 'id_status',
+  foreignField: 'id',
+  justOne: true
+});
+
+ChamadoSchema.virtual('solicitante', {
+  ref: 'Usuario',
+  localField: 'id_usuario_solicitante',
+  foreignField: 'id',
+  justOne: true
+});
+
+ChamadoSchema.virtual('departamento', {
+  ref: 'Departamento',
+  localField: 'id_departamento',
+  foreignField: 'id',
+  justOne: true
+});

@@ -41,17 +41,17 @@ let ChamadosService = class ChamadosService {
     async findAll() {
         return await this.chamadoModel
             .find()
-            .populate('id_status')
-            .populate('id_usuario_solicitante')
-            .populate('id_departamento')
+            .populate('status')
+            .populate('solicitante')
+            .populate('departamento')
             .exec();
     }
     async findOne(id) {
         const chamado = await this.chamadoModel
             .findOne({ id })
-            .populate('id_status')
-            .populate('id_usuario_solicitante')
-            .populate('id_departamento')
+            .populate('status')
+            .populate('solicitante')
+            .populate('departamento')
             .exec();
         if (!chamado) {
             throw new common_1.NotFoundException(`Chamado com ID ${id} não encontrado`);
@@ -61,17 +61,17 @@ let ChamadosService = class ChamadosService {
     async findByUsuario(idUsuario) {
         return await this.chamadoModel
             .find({ id_usuario_solicitante: idUsuario })
-            .populate('id_status')
-            .populate('id_usuario_solicitante')
-            .populate('id_departamento')
+            .populate('status')
+            .populate('solicitante')
+            .populate('departamento')
             .exec();
     }
     async findByDepartamento(idDepartamento) {
         return await this.chamadoModel
             .find({ id_departamento: idDepartamento })
-            .populate('id_status')
-            .populate('id_usuario_solicitante')
-            .populate('id_departamento')
+            .populate('status')
+            .populate('solicitante')
+            .populate('departamento')
             .exec();
     }
     async update(id, updateChamadoDto) {
