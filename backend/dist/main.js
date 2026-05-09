@@ -40,6 +40,7 @@ const swagger_1 = require("@nestjs/swagger");
 dotenv.config();
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.enableCors();
     const config = new swagger_1.DocumentBuilder()
         .setTitle('SCC API')
         .setDescription('API para o Sistema de Controle de Chamados')

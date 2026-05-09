@@ -16,7 +16,7 @@ export class ChamadosController {
   @ApiOperation({ summary: 'Criar um novo chamado com classificação de prioridade por IA' })
   @ApiResponse({ status: 201, description: 'Chamado criado com sucesso' })
   create(@Body() createChamadoDto: CreateChamadoDto, @Request() req) {
-    return this.chamadosService.create(createChamadoDto, req.user.userId);
+    return this.chamadosService.create(createChamadoDto, req.user.id);
   }
 
   @Get()

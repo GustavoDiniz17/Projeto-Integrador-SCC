@@ -1,0 +1,62 @@
+$ nest start
+◇ injected env (7) from .env // tip: ⌘ enable debugging { debug: true }
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +21ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:45 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +74ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseCoreModule dependencies initialized[39m[38;5;3m +5633ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +6ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCargosModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDepartamentosModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mStatusModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsuariosModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChamadosModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +24ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsuariosController {/usuarios}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/departamento/:idDepartamento, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/cargo/:idCargo, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCargosController {/cargos}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/cargos, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/cargos/nivel/:nivelAcesso, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/cargos/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDepartamentosController {/departamentos}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/departamentos, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/departamentos/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mStatusController {/status}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/status, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/status/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mChamadosController {/chamados}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/usuario/:idUsuario, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/departamento/:idDepartamento, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/:id, PATCH} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/criar-usuario, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/perfil, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 8048  - [39m05/09/2026, 9:54:50 AM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +4ms[39m
+🚀 Application is running on: http://localhost:3000

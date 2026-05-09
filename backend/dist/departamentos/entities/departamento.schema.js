@@ -9,27 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Status = void 0;
-const typeorm_1 = require("typeorm");
-let Status = class Status {
+exports.DepartamentoSchema = exports.Departamento = void 0;
+const mongoose_1 = require("@nestjs/mongoose");
+let Departamento = class Departamento {
     id;
     descricao;
+    abreviacao;
     ativo;
 };
-exports.Status = Status;
+exports.Departamento = Departamento;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)({ type: 'varchar', length: 255 }),
+    (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
-], Status.prototype, "id", void 0);
+], Departamento.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Status.prototype, "descricao", void 0);
+], Departamento.prototype, "descricao", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'boolean', default: true }),
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Departamento.prototype, "abreviacao", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: true }),
     __metadata("design:type", Boolean)
-], Status.prototype, "ativo", void 0);
-exports.Status = Status = __decorate([
-    (0, typeorm_1.Entity)('Status')
-], Status);
-//# sourceMappingURL=status.entity.js.map
+], Departamento.prototype, "ativo", void 0);
+exports.Departamento = Departamento = __decorate([
+    (0, mongoose_1.Schema)({ collection: 'Departamentos' })
+], Departamento);
+exports.DepartamentoSchema = mongoose_1.SchemaFactory.createForClass(Departamento);
+//# sourceMappingURL=departamento.schema.js.map

@@ -16,7 +16,11 @@ exports.UsuariosController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const usuarios_service_1 = require("./usuarios.service");
+const create_usuario_dto_1 = require("./dto/create-usuario.dto");
+const update_usuario_dto_1 = require("./dto/update-usuario.dto");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
+const roles_guard_1 = require("../auth/guards/roles.guard");
+const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 let UsuariosController = class UsuariosController {
     usuariosService;
     constructor(usuariosService) {
@@ -36,6 +40,15 @@ let UsuariosController = class UsuariosController {
     }
     findOne(id) {
         return this.usuariosService.findOne(id);
+    }
+    create(createUsuarioDto) {
+        return this.usuariosService.create(createUsuarioDto);
+    }
+    update(id, updateUsuarioDto) {
+        return this.usuariosService.update(id, updateUsuarioDto);
+    }
+    remove(id) {
+        return this.usuariosService.remove(id);
     }
 };
 exports.UsuariosController = UsuariosController;
@@ -85,6 +98,43 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsuariosController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Post)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Criar novo usuário (Apenas ADMIN)' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Usuário criado com sucesso' }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_usuario_dto_1.CreateUsuarioDto]),
+    __metadata("design:returntype", void 0)
+], UsuariosController.prototype, "create", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Atualizar usuário (Apenas ADMIN)' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Usuário atualizado com sucesso' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, update_usuario_dto_1.UpdateUsuarioDto]),
+    __metadata("design:returntype", void 0)
+], UsuariosController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)('ADMIN'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Remover usuário (Apenas ADMIN)' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Usuário removido com sucesso' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UsuariosController.prototype, "remove", null);
 exports.UsuariosController = UsuariosController = __decorate([
     (0, swagger_1.ApiTags)('Usuarios'),
     (0, common_1.Controller)('usuarios'),

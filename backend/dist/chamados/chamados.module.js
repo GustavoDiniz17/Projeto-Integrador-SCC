@@ -8,20 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChamadosModule = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
+const mongoose_1 = require("@nestjs/mongoose");
 const chamados_service_1 = require("./chamados.service");
 const chamados_controller_1 = require("./chamados.controller");
-const chamado_entity_1 = require("./entities/chamado.entity");
+const chamado_schema_1 = require("./entities/chamado.schema");
 const ia_service_1 = require("../ia/ia.service");
 let ChamadosModule = class ChamadosModule {
 };
 exports.ChamadosModule = ChamadosModule;
 exports.ChamadosModule = ChamadosModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([chamado_entity_1.Chamado])],
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: chamado_schema_1.Chamado.name, schema: chamado_schema_1.ChamadoSchema }]),
+        ],
         controllers: [chamados_controller_1.ChamadosController],
         providers: [chamados_service_1.ChamadosService, ia_service_1.IaService],
-        exports: [chamados_service_1.ChamadosService],
     })
 ], ChamadosModule);
 //# sourceMappingURL=chamados.module.js.map

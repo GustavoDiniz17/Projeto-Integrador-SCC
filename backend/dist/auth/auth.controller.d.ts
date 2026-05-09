@@ -10,10 +10,14 @@ export declare class AuthController {
             id: string;
             nome: string;
             email: string;
-            cargo: import("../cargos/entities/cargo.entity").Cargo;
-            departamento: import("../departamentos/entities/departamento.entity").Departamento;
+            cargo: any;
+            departamento: any;
         };
     }>;
-    createUser(createUserDto: CreateUserDto, req: any): Promise<import("../usuarios/entities/usuario.entity").Usuario>;
+    createUser(createUserDto: CreateUserDto, req: any): Promise<import("mongoose").Document<unknown, {}, import("../usuarios/entities/usuario.schema").UsuarioDocument, {}, import("mongoose").DefaultSchemaOptions> & import("../usuarios/entities/usuario.schema").Usuario & import("mongoose").Document<import("mongoose").Types.ObjectId, any, any, Record<string, any>, {}> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }>;
     getPerfil(req: any): Promise<any>;
 }

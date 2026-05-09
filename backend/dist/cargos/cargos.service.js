@@ -14,28 +14,32 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CargosService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const cargo_entity_1 = require("./entities/cargo.entity");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const cargo_schema_1 = require("./entities/cargo.schema");
 let CargosService = class CargosService {
-    cargoRepository;
-    constructor(cargoRepository) {
-        this.cargoRepository = cargoRepository;
+    cargoModel;
+    constructor(cargoModel) {
+        this.cargoModel = cargoModel;
     }
     async findAll() {
-        return await this.cargoRepository.find();
+        return await this.cargoModel.find().exec();
     }
     async findOne(id) {
-        return await this.cargoRepository.findOneBy({ id });
+        const cargo = await this.cargoModel.findOne({ id }).exec();
+        if (!cargo) {
+            throw new common_1.NotFoundException(`Cargo com ID ${id} não encontrado`);
+        }
+        return cargo;
     }
     async findByNivelAcesso(nivelAcesso) {
-        return await this.cargoRepository.findBy({ nivel_acesso: nivelAcesso });
+        return await this.cargoModel.find({ nivel_acesso: nivelAcesso }).exec();
     }
 };
 exports.CargosService = CargosService;
 exports.CargosService = CargosService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(cargo_entity_1.Cargo)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(0, (0, mongoose_1.InjectModel)(cargo_schema_1.Cargo.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], CargosService);
 //# sourceMappingURL=cargos.service.js.map

@@ -48,24 +48,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const usuario_entity_1 = require("../usuarios/entities/usuario.entity");
-const bcrypt = __importStar(require("bcrypt"));
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const usuario_schema_1 = require("../usuarios/entities/usuario.schema");
+const bcrypt = __importStar(require("bcryptjs"));
 const uuid_1 = require("uuid");
 let AuthService = class AuthService {
-    usuarioRepository;
+    usuarioModel;
     jwtService;
-    constructor(usuarioRepository, jwtService) {
-        this.usuarioRepository = usuarioRepository;
+    constructor(usuarioModel, jwtService) {
+        this.usuarioModel = usuarioModel;
         this.jwtService = jwtService;
     }
     async login(loginDto) {
-        const usuario = await this.usuarioRepository.findOne({
-            where: { email: loginDto.email },
-            relations: ['cargo', 'departamento'],
-            select: ['id', 'nome', 'email', 'senha', 'cargo', 'departamento', 'ativo'],
-        });
+        const usuario = await this.usuarioModel
+            .findOne({ email: loginDto.email })
+            .select('+senha')
+            .populate('cargo')
+            .populate('departamento')
+            .exec();
         if (!usuario) {
             throw new common_1.UnauthorizedException('Email ou senha inválidos');
         }
@@ -76,12 +77,13 @@ let AuthService = class AuthService {
         if (!senhaValida) {
             throw new common_1.UnauthorizedException('Email ou senha inválidos');
         }
+        const cargo = usuario.cargo;
         const payload = {
             id: usuario.id,
             email: usuario.email,
             nome: usuario.nome,
-            cargo: usuario.cargo.descricao,
-            nivel_acesso: usuario.cargo.nivel_acesso,
+            cargo: cargo?.descricao,
+            nivel_acesso: cargo?.nivel_acesso,
         };
         return {
             access_token: this.jwtService.sign(payload),
@@ -98,14 +100,14 @@ let AuthService = class AuthService {
         if (usuarioLogado.nivel_acesso !== 'Admin') {
             throw new common_1.UnauthorizedException('Apenas administradores podem criar usuários');
         }
-        const usuarioExistente = await this.usuarioRepository.findOneBy({
+        const usuarioExistente = await this.usuarioModel.findOne({
             email: createUserDto.email,
         });
         if (usuarioExistente) {
             throw new common_1.ConflictException('Email já cadastrado');
         }
         const senhaHash = await bcrypt.hash(createUserDto.senha, 10);
-        const novoUsuario = this.usuarioRepository.create({
+        const novoUsuario = new this.usuarioModel({
             id: (0, uuid_1.v4)(),
             nome: createUserDto.nome,
             email: createUserDto.email,
@@ -114,21 +116,21 @@ let AuthService = class AuthService {
             id_departamento: createUserDto.id_departamento,
             ativo: true,
         });
-        return await this.usuarioRepository.save(novoUsuario);
+        return await novoUsuario.save();
     }
     async validateUser(id) {
-        const usuario = await this.usuarioRepository.findOne({
-            where: { id },
-            relations: ['cargo', 'departamento'],
-        });
-        return usuario;
+        return await this.usuarioModel
+            .findOne({ id })
+            .populate('cargo')
+            .populate('departamento')
+            .exec();
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(usuario_entity_1.Usuario)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
+    __param(0, (0, mongoose_1.InjectModel)(usuario_schema_1.Usuario.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
         jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

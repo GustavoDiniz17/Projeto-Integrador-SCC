@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const typeorm_1 = require("@nestjs/typeorm");
+const mongoose_1 = require("@nestjs/mongoose");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const usuarios_module_1 = require("./usuarios/usuarios.module");
@@ -28,17 +28,12 @@ exports.AppModule = AppModule = __decorate([
                 isGlobal: true,
                 envFilePath: '.env',
             }),
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'mysql',
-                host: process.env.DB_HOST || 'localhost',
-                port: parseInt(process.env.DB_PORT || '3306', 10),
-                username: process.env.DB_USER || 'root',
-                password: process.env.DB_PASSWORD || 'Admin@123',
-                database: process.env.DB_NAME || 'scc_db',
-                entities: ['dist/**/*.entity.js'],
-                synchronize: false,
-                logging: true,
-                logger: 'advanced-console',
+            mongoose_1.MongooseModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                useFactory: async (configService) => ({
+                    uri: configService.get('MONGODB_URI') || 'mongodb://localhost:27017/scc_db',
+                }),
+                inject: [config_1.ConfigService],
             }),
             usuarios_module_1.UsuariosModule,
             cargos_module_1.CargosModule,

@@ -14,51 +14,88 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChamadosService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const chamado_entity_1 = require("./entities/chamado.entity");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const chamado_schema_1 = require("./entities/chamado.schema");
 const ia_service_1 = require("../ia/ia.service");
 const uuid_1 = require("uuid");
 let ChamadosService = class ChamadosService {
-    chamadoRepository;
+    chamadoModel;
     iaService;
-    constructor(chamadoRepository, iaService) {
-        this.chamadoRepository = chamadoRepository;
+    constructor(chamadoModel, iaService) {
+        this.chamadoModel = chamadoModel;
         this.iaService = iaService;
     }
-    async create(createChamadoDto) {
+    async create(createChamadoDto, usuarioId) {
         const prioridade = this.iaService.classifyPriority(createChamadoDto.descricao);
         const codigo = `CH-${Date.now()}`;
-        const chamado = this.chamadoRepository.create({
+        const novoChamado = new this.chamadoModel({
             id: (0, uuid_1.v4)(),
+            codigo,
             ...createChamadoDto,
             prioridade,
-            codigo,
+            id_usuario_solicitante: usuarioId,
         });
-        return await this.chamadoRepository.save(chamado);
+        return await novoChamado.save();
     }
     async findAll() {
-        return await this.chamadoRepository.find();
+        return await this.chamadoModel
+            .find()
+            .populate('id_status')
+            .populate('id_usuario_solicitante')
+            .populate('id_departamento')
+            .exec();
     }
     async findOne(id) {
-        return await this.chamadoRepository.findOneBy({ id });
+        const chamado = await this.chamadoModel
+            .findOne({ id })
+            .populate('id_status')
+            .populate('id_usuario_solicitante')
+            .populate('id_departamento')
+            .exec();
+        if (!chamado) {
+            throw new common_1.NotFoundException(`Chamado com ID ${id} não encontrado`);
+        }
+        return chamado;
     }
     async findByUsuario(idUsuario) {
-        return await this.chamadoRepository.find({
-            where: { id_usuario_solicitante: idUsuario },
-        });
+        return await this.chamadoModel
+            .find({ id_usuario_solicitante: idUsuario })
+            .populate('id_status')
+            .populate('id_usuario_solicitante')
+            .populate('id_departamento')
+            .exec();
     }
     async findByDepartamento(idDepartamento) {
-        return await this.chamadoRepository.find({
-            where: { id_departamento: idDepartamento },
-        });
+        return await this.chamadoModel
+            .find({ id_departamento: idDepartamento })
+            .populate('id_status')
+            .populate('id_usuario_solicitante')
+            .populate('id_departamento')
+            .exec();
+    }
+    async update(id, updateChamadoDto) {
+        const chamado = await this.chamadoModel
+            .findOneAndUpdate({ id }, updateChamadoDto, { new: true })
+            .exec();
+        if (!chamado) {
+            throw new common_1.NotFoundException(`Chamado com ID ${id} não encontrado`);
+        }
+        return chamado;
+    }
+    async remove(id) {
+        const result = await this.chamadoModel.deleteOne({ id }).exec();
+        if (result.deletedCount === 0) {
+            throw new common_1.NotFoundException(`Chamado com ID ${id} não encontrado`);
+        }
+        return { message: 'Chamado removido com sucesso' };
     }
 };
 exports.ChamadosService = ChamadosService;
 exports.ChamadosService = ChamadosService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(chamado_entity_1.Chamado)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
+    __param(0, (0, mongoose_1.InjectModel)(chamado_schema_1.Chamado.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
         ia_service_1.IaService])
 ], ChamadosService);
 //# sourceMappingURL=chamados.service.js.map

@@ -9,33 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cargo = void 0;
-const typeorm_1 = require("typeorm");
-const usuario_entity_1 = require("../../usuarios/entities/usuario.entity");
+exports.CargoSchema = exports.Cargo = void 0;
+const mongoose_1 = require("@nestjs/mongoose");
 let Cargo = class Cargo {
     id;
     descricao;
     nivel_acesso;
-    usuarios;
 };
 exports.Cargo = Cargo;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)({ type: 'varchar', length: 255 }),
+    (0, mongoose_1.Prop)({ required: true, unique: true }),
     __metadata("design:type", String)
 ], Cargo.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Cargo.prototype, "descricao", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 255 }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Cargo.prototype, "nivel_acesso", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => usuario_entity_1.Usuario, (usuario) => usuario.cargo, { cascade: true }),
-    __metadata("design:type", Array)
-], Cargo.prototype, "usuarios", void 0);
 exports.Cargo = Cargo = __decorate([
-    (0, typeorm_1.Entity)('Cargos')
+    (0, mongoose_1.Schema)({ collection: 'Cargos' })
 ], Cargo);
-//# sourceMappingURL=cargo.entity.js.map
+exports.CargoSchema = mongoose_1.SchemaFactory.createForClass(Cargo);
+//# sourceMappingURL=cargo.schema.js.map

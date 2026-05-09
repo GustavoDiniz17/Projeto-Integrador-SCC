@@ -8,21 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuariosModule = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
+const mongoose_1 = require("@nestjs/mongoose");
 const usuarios_service_1 = require("./usuarios.service");
 const usuarios_controller_1 = require("./usuarios.controller");
-const usuario_entity_1 = require("./entities/usuario.entity");
-const cargo_entity_1 = require("../cargos/entities/cargo.entity");
-const departamento_entity_1 = require("../departamentos/entities/departamento.entity");
+const usuario_schema_1 = require("./entities/usuario.schema");
 let UsuariosModule = class UsuariosModule {
 };
 exports.UsuariosModule = UsuariosModule;
 exports.UsuariosModule = UsuariosModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([usuario_entity_1.Usuario, cargo_entity_1.Cargo, departamento_entity_1.Departamento])],
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: usuario_schema_1.Usuario.name, schema: usuario_schema_1.UsuarioSchema }]),
+        ],
         controllers: [usuarios_controller_1.UsuariosController],
         providers: [usuarios_service_1.UsuariosService],
-        exports: [usuarios_service_1.UsuariosService],
+        exports: [usuarios_service_1.UsuariosService, mongoose_1.MongooseModule],
     })
 ], UsuariosModule);
 //# sourceMappingURL=usuarios.module.js.map

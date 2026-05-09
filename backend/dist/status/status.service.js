@@ -14,28 +14,32 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StatusService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const status_entity_1 = require("./entities/status.entity");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const status_schema_1 = require("./entities/status.schema");
 let StatusService = class StatusService {
-    statusRepository;
-    constructor(statusRepository) {
-        this.statusRepository = statusRepository;
+    statusModel;
+    constructor(statusModel) {
+        this.statusModel = statusModel;
     }
     async findAll() {
-        return await this.statusRepository.find();
+        return await this.statusModel.find().exec();
     }
     async findOne(id) {
-        return await this.statusRepository.findOneBy({ id });
+        const status = await this.statusModel.findOne({ id }).exec();
+        if (!status) {
+            throw new common_1.NotFoundException(`Status com ID ${id} não encontrado`);
+        }
+        return status;
     }
     async findAllActive() {
-        return await this.statusRepository.findBy({ ativo: true });
+        return await this.statusModel.find({ ativo: true }).exec();
     }
 };
 exports.StatusService = StatusService;
 exports.StatusService = StatusService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(status_entity_1.Status)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(0, (0, mongoose_1.InjectModel)(status_schema_1.Status.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], StatusService);
 //# sourceMappingURL=status.service.js.map

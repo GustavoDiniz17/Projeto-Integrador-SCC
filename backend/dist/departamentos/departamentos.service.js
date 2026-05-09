@@ -14,28 +14,32 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepartamentosService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const departamento_entity_1 = require("./entities/departamento.entity");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const departamento_schema_1 = require("./entities/departamento.schema");
 let DepartamentosService = class DepartamentosService {
-    departamentoRepository;
-    constructor(departamentoRepository) {
-        this.departamentoRepository = departamentoRepository;
+    departamentoModel;
+    constructor(departamentoModel) {
+        this.departamentoModel = departamentoModel;
     }
     async findAll() {
-        return await this.departamentoRepository.find();
+        return await this.departamentoModel.find().exec();
     }
     async findOne(id) {
-        return await this.departamentoRepository.findOneBy({ id });
+        const departamento = await this.departamentoModel.findOne({ id }).exec();
+        if (!departamento) {
+            throw new common_1.NotFoundException(`Departamento com ID ${id} não encontrado`);
+        }
+        return departamento;
     }
     async findAllActive() {
-        return await this.departamentoRepository.findBy({ ativo: true });
+        return await this.departamentoModel.find({ ativo: true }).exec();
     }
 };
 exports.DepartamentosService = DepartamentosService;
 exports.DepartamentosService = DepartamentosService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(departamento_entity_1.Departamento)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(0, (0, mongoose_1.InjectModel)(departamento_schema_1.Departamento.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], DepartamentosService);
 //# sourceMappingURL=departamentos.service.js.map
