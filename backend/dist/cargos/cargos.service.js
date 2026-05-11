@@ -17,10 +17,18 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const cargo_schema_1 = require("./entities/cargo.schema");
+const uuid_1 = require("uuid");
 let CargosService = class CargosService {
     cargoModel;
     constructor(cargoModel) {
         this.cargoModel = cargoModel;
+    }
+    async create(createDto) {
+        const novo = new this.cargoModel({
+            id: (0, uuid_1.v4)(),
+            ...createDto,
+        });
+        return await novo.save();
     }
     async findAll() {
         return await this.cargoModel.find().exec();
@@ -34,6 +42,22 @@ let CargosService = class CargosService {
     }
     async findByNivelAcesso(nivelAcesso) {
         return await this.cargoModel.find({ nivel_acesso: nivelAcesso }).exec();
+    }
+    async update(id, updateDto) {
+        const cargo = await this.cargoModel
+            .findOneAndUpdate({ id }, updateDto, { new: true })
+            .exec();
+        if (!cargo) {
+            throw new common_1.NotFoundException(`Cargo com ID ${id} não encontrado`);
+        }
+        return cargo;
+    }
+    async remove(id) {
+        const result = await this.cargoModel.deleteOne({ id }).exec();
+        if (result.deletedCount === 0) {
+            throw new common_1.NotFoundException(`Cargo com ID ${id} não encontrado`);
+        }
+        return { message: 'Cargo removido com sucesso' };
     }
 };
 exports.CargosService = CargosService;

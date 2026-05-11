@@ -17,10 +17,19 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const departamento_schema_1 = require("./entities/departamento.schema");
+const uuid_1 = require("uuid");
 let DepartamentosService = class DepartamentosService {
     departamentoModel;
     constructor(departamentoModel) {
         this.departamentoModel = departamentoModel;
+    }
+    async create(createDto) {
+        const novo = new this.departamentoModel({
+            id: (0, uuid_1.v4)(),
+            ...createDto,
+            ativo: createDto.ativo !== undefined ? createDto.ativo : true,
+        });
+        return await novo.save();
     }
     async findAll() {
         return await this.departamentoModel.find().exec();
@@ -34,6 +43,22 @@ let DepartamentosService = class DepartamentosService {
     }
     async findAllActive() {
         return await this.departamentoModel.find({ ativo: true }).exec();
+    }
+    async update(id, updateDto) {
+        const departamento = await this.departamentoModel
+            .findOneAndUpdate({ id }, updateDto, { new: true })
+            .exec();
+        if (!departamento) {
+            throw new common_1.NotFoundException(`Departamento com ID ${id} não encontrado`);
+        }
+        return departamento;
+    }
+    async remove(id) {
+        const result = await this.departamentoModel.deleteOne({ id }).exec();
+        if (result.deletedCount === 0) {
+            throw new common_1.NotFoundException(`Departamento com ID ${id} não encontrado`);
+        }
+        return { message: 'Departamento removido com sucesso' };
     }
 };
 exports.DepartamentosService = DepartamentosService;

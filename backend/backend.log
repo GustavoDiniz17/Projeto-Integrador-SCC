@@ -1,65 +1,20 @@
 $ nest start
-◇ injected env (7) from .env // tip: ⌁ auth for agents [www.vestauth.com]
-◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
-◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+◇ injected env (7) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
 ◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
 ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
 ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +22ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:41 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +61ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseCoreModule dependencies initialized[39m[38;5;3m +8160ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +6ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCargosModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDepartamentosModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mStatusModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsuariosModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mChamadosModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +24ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsuariosController {/usuarios}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/departamento/:idDepartamento, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/cargo/:idCargo, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/:id, PATCH} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/usuarios/:id, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCargosController {/cargos}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/cargos, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/cargos/nivel/:nivelAcesso, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/cargos/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDepartamentosController {/departamentos}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/departamentos, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/departamentos/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mStatusController {/status}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/status, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/status/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mChamadosController {/chamados}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/usuario/:idUsuario, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/departamento/:idDepartamento, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/:id, PATCH} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/chamados/:id, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/criar-usuario, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/perfil, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 19020  - [39m05/09/2026, 10:16:49 AM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
-🚀 Application is running on: http://localhost:3000
-IA Classificou: "Não consigo me conectar à VPN da empresa para trabalhar remotamente. Aparece erro de autenticação." -> Alta
-IA Classificou: "Não consigo me conectar à VPN da empresa para trabalhar remotamente. Aparece erro de autenticação." -> Alta
-IA Classificou: "Este é um teste para garantir que o dado enviado pelo frontend chega ao banco e volta para a listagem." -> Alta
+◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +20ms[39m
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 30972  - [39m05/11/2026, 7:31:30 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +56ms[39m
+[31m[Nest] 30972  - [39m05/11/2026, 7:32:00 PM [31m  ERROR[39m [38;5;3m[MongooseModule] [39m[31mUnable to connect to the database. Retrying (1)...[39m
+MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+    at _handleConnectionErrors (/home/ubuntu/Projeto-Integrador-SCC/backend/node_modules/.pnpm/mongoose@9.6.1/node_modules/mongoose/lib/connection.js:1180:11)
+    at NativeConnection.asPromise (/home/ubuntu/Projeto-Integrador-SCC/backend/node_modules/.pnpm/mongoose@9.6.1/node_modules/mongoose/lib/connection.js:1643:11)
+    at async <anonymous> (/home/ubuntu/Projeto-Integrador-SCC/backend/node_modules/.pnpm/@nestjs+mongoose@11.0.4_@nestjs+common@11.1.18_class-transformer@0.5.1_class-validator@_8e54ad1392d37c2249afd3725036cc06/node_modules/@nestjs/mongoose/lib/mongoose-core.module.ts:125:15)

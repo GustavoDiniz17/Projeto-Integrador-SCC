@@ -16,10 +16,14 @@ exports.DepartamentosController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const departamentos_service_1 = require("./departamentos.service");
+const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 let DepartamentosController = class DepartamentosController {
     departamentosService;
     constructor(departamentosService) {
         this.departamentosService = departamentosService;
+    }
+    create(createDto) {
+        return this.departamentosService.create(createDto);
     }
     findAll(ativo) {
         if (ativo === 'true') {
@@ -30,13 +34,26 @@ let DepartamentosController = class DepartamentosController {
     findOne(id) {
         return this.departamentosService.findOne(id);
     }
+    update(id, updateDto) {
+        return this.departamentosService.update(id, updateDto);
+    }
+    remove(id) {
+        return this.departamentosService.remove(id);
+    }
 };
 exports.DepartamentosController = DepartamentosController;
+__decorate([
+    (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Criar novo departamento' }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], DepartamentosController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     (0, swagger_1.ApiOperation)({ summary: 'Listar todos os departamentos' }),
     (0, swagger_1.ApiQuery)({ name: 'ativo', required: false, type: Boolean }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Lista de departamentos retornada com sucesso' }),
     __param(0, (0, common_1.Query)('ativo')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -45,15 +62,32 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':id'),
     (0, swagger_1.ApiOperation)({ summary: 'Buscar departamento por ID' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Departamento encontrado' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Departamento não encontrado' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], DepartamentosController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Atualizar departamento' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], DepartamentosController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Remover departamento' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], DepartamentosController.prototype, "remove", null);
 exports.DepartamentosController = DepartamentosController = __decorate([
     (0, swagger_1.ApiTags)('Departamentos'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('departamentos'),
     __metadata("design:paramtypes", [departamentos_service_1.DepartamentosService])
 ], DepartamentosController);

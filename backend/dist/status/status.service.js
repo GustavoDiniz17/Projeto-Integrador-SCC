@@ -17,10 +17,19 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const status_schema_1 = require("./entities/status.schema");
+const uuid_1 = require("uuid");
 let StatusService = class StatusService {
     statusModel;
     constructor(statusModel) {
         this.statusModel = statusModel;
+    }
+    async create(createDto) {
+        const novo = new this.statusModel({
+            id: (0, uuid_1.v4)(),
+            ...createDto,
+            ativo: createDto.ativo !== undefined ? createDto.ativo : true,
+        });
+        return await novo.save();
     }
     async findAll() {
         return await this.statusModel.find().exec();
@@ -34,6 +43,22 @@ let StatusService = class StatusService {
     }
     async findAllActive() {
         return await this.statusModel.find({ ativo: true }).exec();
+    }
+    async update(id, updateDto) {
+        const status = await this.statusModel
+            .findOneAndUpdate({ id }, updateDto, { new: true })
+            .exec();
+        if (!status) {
+            throw new common_1.NotFoundException(`Status com ID ${id} não encontrado`);
+        }
+        return status;
+    }
+    async remove(id) {
+        const result = await this.statusModel.deleteOne({ id }).exec();
+        if (result.deletedCount === 0) {
+            throw new common_1.NotFoundException(`Status com ID ${id} não encontrado`);
+        }
+        return { message: 'Status removido com sucesso' };
     }
 };
 exports.StatusService = StatusService;

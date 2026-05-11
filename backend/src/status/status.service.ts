@@ -2,12 +2,22 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Status, StatusDocument } from './entities/status.schema';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class StatusService {
   constructor(
     @InjectModel(Status.name) private statusModel: Model<StatusDocument>,
   ) {}
+
+  async create(createDto: any) {
+    const novo = new this.statusModel({
+      id: uuidv4(),
+      ...createDto,
+      ativo: createDto.ativo !== undefined ? createDto.ativo : true,
+    });
+    return await novo.save();
+  }
 
   async findAll() {
     return await this.statusModel.find().exec();
@@ -25,14 +35,9 @@ export class StatusService {
     return await this.statusModel.find({ ativo: true }).exec();
   }
 
-  async create(createStatusDto: any) {
-    const novo = new this.statusModel(createStatusDto);
-    return await novo.save();
-  }
-
-  async update(id: string, updateStatusDto: any) {
+  async update(id: string, updateDto: any) {
     const status = await this.statusModel
-      .findOneAndUpdate({ id }, updateStatusDto, { new: true })
+      .findOneAndUpdate({ id }, updateDto, { new: true })
       .exec();
     if (!status) {
       throw new NotFoundException(`Status com ID ${id} não encontrado`);

@@ -3,6 +3,11 @@ import { Status, StatusDocument } from './entities/status.schema';
 export declare class StatusService {
     private statusModel;
     constructor(statusModel: Model<StatusDocument>);
+    create(createDto: any): Promise<import("mongoose").Document<unknown, {}, StatusDocument, {}, import("mongoose").DefaultSchemaOptions> & Status & import("mongoose").Document<import("mongoose").Types.ObjectId, any, any, Record<string, any>, {}> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }>;
     findAll(): Promise<(import("mongoose").Document<unknown, {}, StatusDocument, {}, import("mongoose").DefaultSchemaOptions> & Status & import("mongoose").Document<import("mongoose").Types.ObjectId, any, any, Record<string, any>, {}> & Required<{
         _id: import("mongoose").Types.ObjectId;
     }> & {
@@ -18,4 +23,12 @@ export declare class StatusService {
     }> & {
         __v: number;
     })[]>;
+    update(id: string, updateDto: any): Promise<import("mongoose").Document<unknown, {}, StatusDocument, {}, import("mongoose").DefaultSchemaOptions> & Status & import("mongoose").Document<import("mongoose").Types.ObjectId, any, any, Record<string, any>, {}> & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }>;
+    remove(id: string): Promise<{
+        message: string;
+    }>;
 }
