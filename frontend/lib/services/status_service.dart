@@ -20,8 +20,22 @@ class StatusService {
           : response.body['message'].toString();
       throw HttpException(msg);
     }
-    List items = response.body is List ? response.body : [];
+    
+    final body = response.body;
+    List items = body is List ? body : [];
     return items.map<StatusModel>((s) => StatusModel.fromJson(s)).toList();
+  }
+
+  Future<StatusModel> getStatusId(String id) async {
+    DevClient client = DevClient();
+    ApiResponse response = await client.get(endpoint: '$endpoint/$id');
+    if (response.statusCode > 299) {
+      String msg = response.body['message'] is List 
+          ? (response.body['message'] as List).join('\n') 
+          : response.body['message'].toString();
+      throw HttpException(msg);
+    }
+    return StatusModel.fromJson(response.body);
   }
 
   Future<void> postStatus(StatusModel status) async {

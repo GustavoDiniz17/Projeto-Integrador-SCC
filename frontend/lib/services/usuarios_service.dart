@@ -20,7 +20,7 @@ class UsuariosService {
           : response.body['message'].toString();
       throw HttpException(msg);
     }
-    List items = response.body is List ? response.body : [];
+    final body = response.body; List items = body is List ? body : [];
     return items.map<UsuarioModel>((u) => UsuarioModel.fromJson(u)).toList();
   }
 
