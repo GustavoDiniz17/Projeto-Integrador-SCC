@@ -22,7 +22,12 @@ class DepartamentosService {
       throw HttpException(msg);
     }
 
-    final body = response.body; List items = body is List ? body : [];
+    final body = response.body;
+    List items = [];
+    if (body is List) {
+      items = body;
+    }
+    
     return items.map<DepartamentoModel>((d) => DepartamentoModel.fromJson(d)).toList();
   }
 

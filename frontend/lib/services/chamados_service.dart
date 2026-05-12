@@ -20,7 +20,12 @@ class ChamadosService {
           : response.body['message'].toString();
       throw HttpException(msg);
     }
-    final body = response.body; List items = body is List ? body : [];
+    
+    final body = response.body;
+    List items = [];
+    if (body is List) {
+      items = body;
+    }
     return items.map<ChamadoModel>((c) => ChamadoModel.fromJson(c)).toList();
   }
 

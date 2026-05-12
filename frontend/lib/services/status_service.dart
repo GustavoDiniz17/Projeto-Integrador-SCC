@@ -22,7 +22,10 @@ class StatusService {
     }
     
     final body = response.body;
-    List items = body is List ? body : [];
+    List items = [];
+    if (body is List) {
+      items = body;
+    }
     return items.map<StatusModel>((s) => StatusModel.fromJson(s)).toList();
   }
 
