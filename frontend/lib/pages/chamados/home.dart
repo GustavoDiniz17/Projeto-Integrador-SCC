@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador/dados_mockup.dart';
 import 'package:projeto_integrador/enums/criticidades_enum.dart';
 import 'package:projeto_integrador/models/chamado_model.dart';
 import 'package:projeto_integrador/routes.dart';
+import 'package:projeto_integrador/services/chamados_service.dart';
 import 'package:projeto_integrador/themes/secundary_button_theme.dart';
 import 'package:projeto_integrador/widgets/custom_button.dart';
 import 'package:projeto_integrador/widgets/custom_drawer.dart';
@@ -18,18 +18,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Future<List<ChamadoModel>> fetchChamados() async {
-    if (assuntoController.text == '') {
-      chamadosList = DadosMockup().listChamados().where((chamadoModel) {
-        final criticidade = chamadoModel.criticidade == criticidadeSelecionada;
+  Future<void> fetchChamados({bool aplicarFiltros = false}) async {
+    appIsLoading = true;
+    setState(() {});
 
-        return criticidade;
-      }).toList();
-    }
+    final chamados = await chamadosService.getChamados();
+    chamadosList = chamados.where((chamadoModel) {
+      final assunto = chamadoModel.assunto.toLowerCase().contains(
+        assuntoController.text.toLowerCase(),
+      );
+      final criticidade =
+          !aplicarFiltros || chamadoModel.criticidade == criticidadeSelecionada;
 
-    return chamadosList;
+      return assunto && criticidade;
+    }).toList();
+
+    appIsLoading = false;
+    setState(() {});
   }
 
+  final ChamadosService chamadosService = ChamadosService();
   List<ChamadoModel> chamadosList = [];
 
   CriticidadesEnum criticidadeSelecionada = CriticidadesEnum.normal;
@@ -40,8 +48,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    fetchChamados();
     super.initState();
+    fetchChamados();
   }
 
   @override
@@ -90,15 +98,7 @@ class _HomeState extends State<Home> {
                   context,
                 ).extension<SecundaryButtonTheme>()?.filterButtonColor,
                 onPressed: () async {
-                  appIsLoading = true;
-                  setState(() {});
-
-                  await Future.delayed(const Duration(seconds: 1), () {
-                    fetchChamados();
-                  });
-
-                  appIsLoading = false;
-                  setState(() {});
+                  await fetchChamados(aplicarFiltros: true);
                 },
               ),
             ],

@@ -7,6 +7,8 @@ import 'package:projeto_integrador/models/chamado_model.dart';
 import 'package:projeto_integrador/models/problema_model.dart';
 import 'package:projeto_integrador/models/status_model.dart';
 import 'package:projeto_integrador/models/tipo_chamado_model.dart';
+import 'package:projeto_integrador/services/chamados_service.dart';
+import 'package:projeto_integrador/services/status_service.dart';
 import 'package:projeto_integrador/themes/secundary_button_theme.dart';
 import 'package:projeto_integrador/widgets/custom_button.dart';
 import 'package:projeto_integrador/widgets/custom_dropdown.dart';
@@ -38,7 +40,8 @@ class _ChamadoDetalhesPageState extends State<ChamadoDetalhesPage> {
   }
 
   Future<List<StatusModel>> fetchStatus() async {
-    return statusList = DadosMockup().listStatus().where((statusModel) {
+    final status = await statusService.getStatus();
+    return statusList = status.where((statusModel) {
       return statusModel.ativo == true;
     }).toList();
   }
@@ -72,16 +75,18 @@ class _ChamadoDetalhesPageState extends State<ChamadoDetalhesPage> {
     setState(() {});
 
     if (widget.idChamado != null) {
-      chamado = DadosMockup().listChamados().firstWhere(
-        (model) => model.id == widget.idChamado,
-      );
+      chamado = await chamadosService.getChamadoId(widget.idChamado!);
 
       statusSelecionado = chamado.status;
       criticidadeSelecionada = chamado.criticidade;
       problemaSelecionado = chamado.problema;
       tipoChamadoSelecionado = chamado.tipoChamado;
-      categoriaProblemaSelecionado = problemaSelecionado!.categoriaProblema;
-      categoriaChamadoSelecionado = tipoChamadoSelecionado!.categoriaChamado;
+      categoriaProblemaSelecionado =
+          problemaSelecionado?.categoriaProblema ??
+          categoriaProblemaSelecionado;
+      categoriaChamadoSelecionado =
+          tipoChamadoSelecionado?.categoriaChamado ??
+          categoriaChamadoSelecionado;
     }
 
     appIsLoading = false;
@@ -101,6 +106,8 @@ class _ChamadoDetalhesPageState extends State<ChamadoDetalhesPage> {
   List<StatusModel> statusList = [];
   StatusModel? statusSelecionado;
 
+  final ChamadosService chamadosService = ChamadosService();
+  final StatusService statusService = StatusService();
   ChamadoModel chamado = ChamadoModel();
 
   CriticidadesEnum criticidadeSelecionada = CriticidadesEnum.normal;
@@ -146,6 +153,30 @@ class _ChamadoDetalhesPageState extends State<ChamadoDetalhesPage> {
                       ),
                     ),
                     Text(chamado.assunto, style: TextStyle(fontSize: 16)),
+                    const Divider(),
+                    Text(
+                      'Status',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      chamado.status?.descricao ?? 'Sem status',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const Divider(),
+                    Text(
+                      'Solicitante',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      chamado.tecnico?.nome ?? chamado.email,
+                      style: TextStyle(fontSize: 16),
+                    ),
                     const Divider(),
                     Text(
                       'Descrição',

@@ -26,7 +26,8 @@ class TipoChamadoModel {
     return TipoChamadoModel(
       id: json['id'],
       descricao: json['descricao'] ?? '',
-      ativo: json['ativo'] == '1' ? true : false,
+      ativo:
+          json['ativo'] == true || json['ativo'] == 1 || json['ativo'] == '1',
       categoriaChamado: CategoriasChamadoEnum.values.firstWhere(
         (e) => e.codigo == json['categoria_chamado'],
         orElse: () => CategoriasChamadoEnum.requisicao,

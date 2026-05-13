@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador/dados_mockup.dart';
 import 'package:projeto_integrador/enums/cargos_enum.dart';
 import 'package:projeto_integrador/models/departamento_model.dart';
 import 'package:projeto_integrador/models/usuario_model.dart';
 import 'package:projeto_integrador/pages/cadastros/usuario/usuario_form.dart';
+import 'package:projeto_integrador/services/departamentos_service.dart';
+import 'package:projeto_integrador/services/usuarios_service.dart';
 import 'package:projeto_integrador/themes/secundary_button_theme.dart';
 import 'package:projeto_integrador/widgets/custom_button.dart';
 import 'package:projeto_integrador/widgets/custom_dialogs.dart';
@@ -21,62 +22,59 @@ class UsuarioList extends StatefulWidget {
 }
 
 class _UsuarioListState extends State<UsuarioList> {
-  Future<List<UsuarioModel>> fetchUsuarios() async {
-    if (descricaoController.text == '') {
-      usuarioLista = DadosMockup().listUsuarios().where((usuarioModel) {
-        final cargo = usuarioModel.cargo == cargoSelecionado;
+  Future<void> fetchUsuarios({bool aplicarFiltros = false}) async {
+    appIsLoading = true;
+    setState(() {});
 
-        final departamento =
-            usuarioModel.departamento?.id == departamentoSelecionado.id;
-
-        return usuarioModel.ativo == ativo && cargo && departamento;
-      }).toList();
-    }
-
-    usuarioLista = DadosMockup().listUsuarios().where((usuarioModel) {
+    final usuarios = await usuariosService.getUsuarios();
+    usuarioLista = usuarios.where((usuarioModel) {
       final nome = usuarioModel.nome.toLowerCase().contains(
         descricaoController.text.toLowerCase(),
       );
-      final cargo = usuarioModel.cargo == cargoSelecionado;
-
+      final cargo = !aplicarFiltros || usuarioModel.cargo == cargoSelecionado;
       final departamento =
-          usuarioModel.departamento?.id == departamentoSelecionado.id;
+          !aplicarFiltros ||
+          departamentoSelecionado == null ||
+          usuarioModel.departamento?.id == departamentoSelecionado?.id;
 
       return nome && usuarioModel.ativo == ativo && cargo && departamento;
     }).toList();
 
-    return usuarioLista;
+    appIsLoading = false;
+    setState(() {});
   }
 
-  Future<List<DepartamentoModel>> fetchDepartamentos() async {
-    return departamentosList = DadosMockup().listDepartamentos().where((
-      departamentoModel,
-    ) {
+  Future<void> fetchDepartamentos() async {
+    final departamentos = await departamentosService.getDepartamentos();
+    departamentosList = departamentos.where((departamentoModel) {
       return departamentoModel.ativo == true;
     }).toList();
+
+    if (departamentoSelecionado == null && departamentosList.isNotEmpty) {
+      departamentoSelecionado = departamentosList.first;
+    }
+
+    setState(() {});
   }
 
+  final DepartamentosService departamentosService = DepartamentosService();
+  final UsuariosService usuariosService = UsuariosService();
+
   List<DepartamentoModel> departamentosList = [];
-  DepartamentoModel departamentoSelecionado = DepartamentoModel(
-    id: '2',
-    descricao: 'Tecnologia da Informação',
-    abreviacao: 'TI',
-    ativo: true,
-  );
-
+  DepartamentoModel? departamentoSelecionado;
   List<UsuarioModel> usuarioLista = [];
-
-  CargosEnum cargoSelecionado = CargosEnum.estagiario;
-
+  CargosEnum cargoSelecionado = CargosEnum.admin;
   TextEditingController descricaoController = TextEditingController();
-
   bool ativo = true;
   bool appIsLoading = false;
 
   @override
   void initState() {
-    fetchDepartamentos();
     super.initState();
+    () async {
+      await fetchDepartamentos();
+      await fetchUsuarios();
+    }();
   }
 
   @override
@@ -96,7 +94,7 @@ class _UsuarioListState extends State<UsuarioList> {
                 child: CustomDropdown(
                   labelText: "Departamento",
                   prefixIcon: Icons.list_alt_outlined,
-                  initialValue: departamentoSelecionado.descricao,
+                  initialValue: departamentoSelecionado?.descricao,
                   items: departamentosList.map((departamento) {
                     return DropdownMenuItem(
                       value: departamento.descricao,
@@ -181,15 +179,7 @@ class _UsuarioListState extends State<UsuarioList> {
                   context,
                 ).extension<SecundaryButtonTheme>()?.filterButtonColor,
                 onPressed: () async {
-                  appIsLoading = true;
-                  setState(() {});
-
-                  await Future.delayed(const Duration(seconds: 1), () {
-                    fetchUsuarios();
-                  });
-
-                  appIsLoading = false;
-                  setState(() {});
+                  await fetchUsuarios(aplicarFiltros: true);
                 },
               ),
             ],

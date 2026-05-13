@@ -34,21 +34,28 @@ class UsuarioModel {
 
   factory UsuarioModel.fromJson(Map<String, dynamic> json) {
     CargosEnum cargoEnum = CargosEnum.estagiario;
-    if (json['cargo'] != null) {
-      if (json['cargo'] is Map) {
-        String? codigo = json['cargo']['id']?.toString() ?? json['cargo']['codigo']?.toString();
+    final cargoJson = json['cargo'] ?? json['id_cargo'];
+
+    if (cargoJson != null) {
+      if (cargoJson is Map) {
+        final codigo =
+            cargoJson['id']?.toString() ??
+            cargoJson['codigo']?.toString() ??
+            cargoJson['descricao']?.toString();
         cargoEnum = CargosEnum.values.firstWhere(
-          (e) => e.codigo == codigo,
+          (e) => e.codigo == codigo || e.descricao == codigo,
           orElse: () => CargosEnum.estagiario,
         );
       } else {
-        String codigo = json['cargo'].toString();
+        final codigo = cargoJson.toString();
         cargoEnum = CargosEnum.values.firstWhere(
-          (e) => e.codigo == codigo,
+          (e) => e.codigo == codigo || e.descricao == codigo,
           orElse: () => CargosEnum.estagiario,
         );
       }
     }
+
+    final departamentoJson = json['departamento'] ?? json['id_departamento'];
 
     return UsuarioModel(
       id: json['id'],
@@ -56,10 +63,13 @@ class UsuarioModel {
       email: json['email'] ?? '',
       senha: json['senha'] ?? '',
       cargo: cargoEnum,
-      departamento: json['departamento'] != null 
-          ? DepartamentoModel.fromJson(json['departamento']) 
+      departamento: departamentoJson is Map
+          ? DepartamentoModel.fromJson(
+              Map<String, dynamic>.from(departamentoJson),
+            )
           : null,
-      ativo: json['ativo'] == true || json['ativo'] == 1 || json['ativo'] == '1',
+      ativo:
+          json['ativo'] == true || json['ativo'] == 1 || json['ativo'] == '1',
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador/dados_mockup.dart';
 import 'package:projeto_integrador/models/status_model.dart';
 import 'package:projeto_integrador/pages/cadastros/status/status_form.dart';
 import 'package:projeto_integrador/services/status_service.dart';
@@ -19,36 +18,12 @@ class StatusList extends StatefulWidget {
 }
 
 class _StatusListState extends State<StatusList> {
-  Map<String, dynamic> buildFilters() {
-    Map<String, dynamic> filters = {};
-    if (descricaoController.text != '') {
-      filters.addAll({
-        "descricao[like]": descricaoController.text,
-        "ativo": ativo,
-      });
-    }
-    /*filters.addAll({'limit': limitGrid, 'offset': offsetGrid});*/
-    return filters;
-  }
-
-  Future<void> fetchStatusBackEnd() async {
+  Future<void> fetchStatus() async {
     appIsLoading = true;
     setState(() {});
 
-    statusList = await statusService.getStatus(buildFilters());
-
-    appIsLoading = false;
-    setState(() {});
-  }
-
-  Future<List<StatusModel>> fetchStatus() async {
-    if (descricaoController.text == '') {
-      statusList = DadosMockup().listStatus().where((statusModel) {
-        return statusModel.ativo == ativo;
-      }).toList();
-    }
-
-    statusList = DadosMockup().listStatus().where((statusModel) {
+    final status = await statusService.getStatus();
+    statusList = status.where((statusModel) {
       final descricao = statusModel.descricao.toLowerCase().contains(
         descricaoController.text.toLowerCase(),
       );
@@ -56,7 +31,8 @@ class _StatusListState extends State<StatusList> {
       return descricao && statusModel.ativo == ativo;
     }).toList();
 
-    return statusList;
+    appIsLoading = false;
+    setState(() {});
   }
 
   StatusService statusService = StatusService();
@@ -67,6 +43,12 @@ class _StatusListState extends State<StatusList> {
 
   bool ativo = true;
   bool appIsLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,15 +120,7 @@ class _StatusListState extends State<StatusList> {
                   context,
                 ).extension<SecundaryButtonTheme>()?.filterButtonColor,
                 onPressed: () async {
-                  appIsLoading = true;
-                  setState(() {});
-
-                  await Future.delayed(const Duration(seconds: 1), () {
-                    fetchStatus();
-                  });
-
-                  appIsLoading = false;
-                  setState(() {});
+                  await fetchStatus();
                 },
               ),
             ],
