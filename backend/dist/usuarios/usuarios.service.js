@@ -59,15 +59,15 @@ let UsuariosService = class UsuariosService {
     async findAll() {
         return await this.usuarioModel
             .find()
-            .populate('id_cargo')
-            .populate('id_departamento')
+            .populate('cargo')
+            .populate('departamento')
             .exec();
     }
     async findOne(id) {
         const usuario = await this.usuarioModel
             .findOne({ id })
-            .populate('id_cargo')
-            .populate('id_departamento')
+            .populate('cargo')
+            .populate('departamento')
             .exec();
         if (!usuario) {
             throw new common_1.NotFoundException(`Usuário com ID ${id} não encontrado`);
@@ -78,29 +78,29 @@ let UsuariosService = class UsuariosService {
         return await this.usuarioModel
             .findOne({ email })
             .select('+senha')
-            .populate('id_cargo')
-            .populate('id_departamento')
+            .populate('cargo')
+            .populate('departamento')
             .exec();
     }
     async findByDepartamento(idDepartamento) {
         return await this.usuarioModel
             .find({ id_departamento: idDepartamento })
-            .populate('id_cargo')
-            .populate('id_departamento')
+            .populate('cargo')
+            .populate('departamento')
             .exec();
     }
     async findByCargo(idCargo) {
         return await this.usuarioModel
             .find({ id_cargo: idCargo })
-            .populate('id_cargo')
-            .populate('id_departamento')
+            .populate('cargo')
+            .populate('departamento')
             .exec();
     }
     async findAllActive() {
         return await this.usuarioModel
             .find({ ativo: true })
-            .populate('id_cargo')
-            .populate('id_departamento')
+            .populate('cargo')
+            .populate('departamento')
             .exec();
     }
     async create(createUsuarioDto) {

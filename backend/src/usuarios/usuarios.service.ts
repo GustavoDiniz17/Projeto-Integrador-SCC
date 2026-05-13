@@ -15,16 +15,16 @@ export class UsuariosService {
   async findAll() {
     return await this.usuarioModel
       .find()
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
   }
 
   async findOne(id: string) {
     const usuario = await this.usuarioModel
       .findOne({ id })
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
 
     if (!usuario) {
@@ -37,32 +37,32 @@ export class UsuariosService {
     return await this.usuarioModel
       .findOne({ email })
       .select('+senha')
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
   }
 
   async findByDepartamento(idDepartamento: string) {
     return await this.usuarioModel
       .find({ id_departamento: idDepartamento })
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
   }
 
   async findByCargo(idCargo: string) {
     return await this.usuarioModel
       .find({ id_cargo: idCargo })
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
   }
 
   async findAllActive() {
     return await this.usuarioModel
       .find({ ativo: true })
-      .populate('id_cargo')
-      .populate('id_departamento')
+      .populate('cargo')
+      .populate('departamento')
       .exec();
   }
 
