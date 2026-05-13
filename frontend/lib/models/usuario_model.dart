@@ -28,7 +28,7 @@ class UsuarioModel {
       'email': email,
       'senha': senha,
       'cargo': cargo.codigo,
-      'ativo': ativo ? 1 : 0,
+      'ativo': ativo,
     };
   }
 

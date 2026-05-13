@@ -16,7 +16,7 @@ class DepartamentoModel {
       'id': id,
       'descricao': descricao,
       'abreviacao': abreviacao,
-      'ativo': ativo ? 1 : 0,
+      'ativo': ativo,
     };
   }
 

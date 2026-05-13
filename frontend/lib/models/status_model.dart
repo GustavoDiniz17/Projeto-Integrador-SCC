@@ -6,7 +6,11 @@ class StatusModel {
   StatusModel({this.id, this.descricao = '', this.ativo = true});
 
   Map<String, dynamic> toJson() {
-    return {'id': id, 'descricao': descricao, 'ativo': ativo ? 1 : 0};
+    return {
+      'id': id, 
+      'descricao': descricao, 
+      'ativo': ativo
+    };
   }
 
   factory StatusModel.fromJson(Map<String, dynamic> json) {
