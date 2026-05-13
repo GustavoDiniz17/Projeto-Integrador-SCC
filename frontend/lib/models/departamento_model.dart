@@ -16,7 +16,7 @@ class DepartamentoModel {
       'id': id,
       'descricao': descricao,
       'abreviacao': abreviacao,
-      'ativo': ativo ? 1 : 0,
+      'ativo': ativo,
     };
   }
 
@@ -25,7 +25,7 @@ class DepartamentoModel {
       id: json['id'],
       descricao: json['descricao'] ?? '',
       abreviacao: json['abreviacao'] ?? '',
-      ativo: json['ativo'] == '1' ? true : false,
+      ativo: json['ativo'] == true || json['ativo'] == 1 || json['ativo'] == '1',
     );
   }
 }

@@ -28,23 +28,20 @@ class UsuarioModel {
       'email': email,
       'senha': senha,
       'cargo': cargo.codigo,
-      'ativo': ativo ? 1 : 0,
+      'ativo': ativo,
     };
   }
 
   factory UsuarioModel.fromJson(Map<String, dynamic> json) {
-    // Trata o cargo que pode vir como objeto do backend ou como código
     CargosEnum cargoEnum = CargosEnum.estagiario;
     if (json['cargo'] != null) {
       if (json['cargo'] is Map) {
-        // Se vier como objeto (do backend auth/login)
         String? codigo = json['cargo']['id']?.toString() ?? json['cargo']['codigo']?.toString();
         cargoEnum = CargosEnum.values.firstWhere(
           (e) => e.codigo == codigo,
           orElse: () => CargosEnum.estagiario,
         );
       } else {
-        // Se vier como código (string/int)
         String codigo = json['cargo'].toString();
         cargoEnum = CargosEnum.values.firstWhere(
           (e) => e.codigo == codigo,
