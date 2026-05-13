@@ -1,8 +1,10 @@
-enum CargosEnum { estagiario, junior, pleno, gerente }
+enum CargosEnum { admin, estagiario, junior, pleno, gerente }
 
 extension CargosEnumExtensions on CargosEnum {
   String get descricao {
     switch (this) {
+      case CargosEnum.admin:
+        return 'Admin';
       case CargosEnum.estagiario:
         return 'Estagiário';
       case CargosEnum.junior:
@@ -16,6 +18,8 @@ extension CargosEnumExtensions on CargosEnum {
 
   String get codigo {
     switch (this) {
+      case CargosEnum.admin:
+        return 'Admin';
       case CargosEnum.estagiario:
         return '1';
       case CargosEnum.junior:

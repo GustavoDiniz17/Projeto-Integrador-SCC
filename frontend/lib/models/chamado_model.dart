@@ -55,20 +55,44 @@ class ChamadoModel {
       }).toList();
     }
 
+    final statusJson = json['status'];
+    final solicitanteJson = json['solicitante'] ?? json['Tecnico'];
+    final problemaJson = json['problema'] ?? json['Problema'];
+    final prioridade = (json['criticidade'] ?? json['prioridade'] ?? '')
+        .toString();
+    final prioridadeNormalizada = prioridade.toLowerCase();
+    final criticidade =
+        prioridadeNormalizada == 'alta' ||
+            prioridadeNormalizada == 'critica' ||
+            prioridadeNormalizada == 'crÃ­tica'
+        ? CriticidadesEnum.critico
+        : prioridadeNormalizada == 'urgente'
+        ? CriticidadesEnum.urgente
+        : CriticidadesEnum.values.firstWhere(
+            (e) =>
+                e.codigo == prioridade ||
+                e.descricao.toLowerCase() == prioridadeNormalizada,
+            orElse: () => CriticidadesEnum.normal,
+          );
+
     return ChamadoModel(
       id: json['id'],
-      tecnico: json['Tecnico'] != null
-          ? UsuarioModel.fromJson(json['Tecnico'])
+      codigo: json['codigo'] ?? '',
+      email:
+          json['email'] ??
+          (solicitanteJson is Map ? solicitanteJson['email'] ?? '' : ''),
+      tecnico: solicitanteJson is Map
+          ? UsuarioModel.fromJson(Map<String, dynamic>.from(solicitanteJson))
           : null,
-      problema: json['Problema'] != null
-          ? ProblemaModel.fromJson(json['Problema'])
+      problema: problemaJson is Map
+          ? ProblemaModel.fromJson(Map<String, dynamic>.from(problemaJson))
           : null,
-      assunto: json['assunto'],
+      status: statusJson is Map
+          ? StatusModel.fromJson(Map<String, dynamic>.from(statusJson))
+          : null,
+      assunto: json['assunto'] ?? '',
       descricao: json['descricao'] ?? '',
-      criticidade: CriticidadesEnum.values.firstWhere(
-        (e) => e.codigo == json['criticidade'],
-        orElse: () => CriticidadesEnum.normal,
-      ),
+      criticidade: criticidade,
       interacoesChamado: listInteracoesChamado,
     );
   }

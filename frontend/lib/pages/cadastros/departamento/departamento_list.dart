@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador/dados_mockup.dart';
 import 'package:projeto_integrador/models/departamento_model.dart';
 import 'package:projeto_integrador/pages/cadastros/departamento/departamento_form.dart';
 import 'package:projeto_integrador/services/departamentos_service.dart';
@@ -19,40 +18,12 @@ class DepartamentoList extends StatefulWidget {
 }
 
 class _DepartamentoListState extends State<DepartamentoList> {
-  Map<String, dynamic> buildFilters() {
-    Map<String, dynamic> filters = {};
-    if (descricaoController.text != '') {
-      filters.addAll({
-        "descricao[like]": descricaoController.text,
-        "ativo": ativo,
-      });
-    }
-    /*filters.addAll({'limit': limitGrid, 'offset': offsetGrid});*/
-    return filters;
-  }
-
-  Future<void> fetchDepartamentosBackEnd() async {
+  Future<void> fetchDepartamentos() async {
     appIsLoading = true;
     setState(() {});
 
-    departamentos = await departamentosService.getDepartamentos(buildFilters());
-
-    appIsLoading = false;
-    setState(() {});
-  }
-
-  Future<List<DepartamentoModel>> fetchDepartamentos() async {
-    if (descricaoController.text == '') {
-      departamentos = DadosMockup().listDepartamentos().where((
-        departamentoModel,
-      ) {
-        return departamentoModel.ativo == ativo;
-      }).toList();
-    }
-
-    departamentos = DadosMockup().listDepartamentos().where((
-      departamentoModel,
-    ) {
+    final lista = await departamentosService.getDepartamentos();
+    departamentos = lista.where((departamentoModel) {
       final descricao = departamentoModel.descricao.toLowerCase().contains(
         descricaoController.text.toLowerCase(),
       );
@@ -60,7 +31,8 @@ class _DepartamentoListState extends State<DepartamentoList> {
       return descricao && departamentoModel.ativo == ativo;
     }).toList();
 
-    return departamentos;
+    appIsLoading = false;
+    setState(() {});
   }
 
   DepartamentosService departamentosService = DepartamentosService();
@@ -71,6 +43,12 @@ class _DepartamentoListState extends State<DepartamentoList> {
 
   bool ativo = true;
   bool appIsLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDepartamentos();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,15 +120,7 @@ class _DepartamentoListState extends State<DepartamentoList> {
                   context,
                 ).extension<SecundaryButtonTheme>()?.filterButtonColor,
                 onPressed: () async {
-                  appIsLoading = true;
-                  setState(() {});
-
-                  await Future.delayed(const Duration(seconds: 1), () {
-                    fetchDepartamentos();
-                  });
-
-                  appIsLoading = false;
-                  setState(() {});
+                  await fetchDepartamentos();
                 },
               ),
             ],

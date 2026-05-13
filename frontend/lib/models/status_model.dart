@@ -13,7 +13,8 @@ class StatusModel {
     return StatusModel(
       id: json['id'],
       descricao: json['descricao'] ?? '',
-      ativo: json['ativo'] == '1' ? true : false,
+      ativo:
+          json['ativo'] == true || json['ativo'] == 1 || json['ativo'] == '1',
     );
   }
 }

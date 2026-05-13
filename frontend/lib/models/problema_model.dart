@@ -26,7 +26,8 @@ class ProblemaModel {
     return ProblemaModel(
       id: json['id'],
       descricao: json['descricao'] ?? '',
-      ativo: json['ativo'] == '1' ? true : false,
+      ativo:
+          json['ativo'] == true || json['ativo'] == 1 || json['ativo'] == '1',
       categoriaProblema: CategoriasProblemaEnum.values.firstWhere(
         (e) => e.codigo == json['categoria_problema'],
         orElse: () => CategoriasProblemaEnum.sistema,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador/widgets/custom_card.dart';
 import 'package:projeto_integrador/widgets/custom_drawer.dart';
 import 'package:projeto_integrador/widgets/custom_scaffold.dart';
 import 'package:projeto_integrador/services/chamados_service.dart';
-import 'package:projeto_integrador/models/chamado_model.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -29,7 +27,9 @@ class _DashboardPageState extends State<DashboardPage> {
       final chamados = await _chamadosService.getChamados();
       setState(() {
         totalChamados = chamados.length;
-        chamadosAbertos = chamados.where((c) => c.status?.descricao == 'Pendente').length;
+        chamadosAbertos = chamados
+            .where((c) => c.status?.descricao == 'Pendente')
+            .length;
         appIsLoading = false;
       });
     } catch (e) {
@@ -68,8 +68,16 @@ class _DashboardPageState extends State<DashboardPage> {
               mainAxisSpacing: 16.0,
               childAspectRatio: 2.0,
               children: [
-                _buildStatCard('Total de Chamados', totalChamados.toString(), Colors.blue),
-                _buildStatCard('Chamados Pendentes', chamadosAbertos.toString(), Colors.orange),
+                _buildStatCard(
+                  'Total de Chamados',
+                  totalChamados.toString(),
+                  Colors.blue,
+                ),
+                _buildStatCard(
+                  'Chamados Pendentes',
+                  chamadosAbertos.toString(),
+                  Colors.orange,
+                ),
                 _buildStatCard('SLA Cumprido', '100%', Colors.green),
               ],
             ),
@@ -88,9 +96,23 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey[700])),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[700],
+              ),
+            ),
             const SizedBox(height: 10),
-            Text(value, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: color)),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
           ],
         ),
       ),
