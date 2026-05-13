@@ -15,9 +15,11 @@ class StatusService {
       filters: filters,
     );
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
     
@@ -33,12 +35,14 @@ class StatusService {
     DevClient client = DevClient();
     ApiResponse response = await client.get(endpoint: '$endpoint/$id');
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
-    return StatusModel.fromJson(response.body);
+    return StatusModel.fromJson(response.body as Map<String, dynamic>);
   }
 
   Future<void> postStatus(StatusModel status) async {
@@ -48,9 +52,11 @@ class StatusService {
       data: status.toJson(),
     );
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
   }

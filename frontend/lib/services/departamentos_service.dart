@@ -16,9 +16,11 @@ class DepartamentosService {
     );
     
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
 
@@ -35,21 +37,25 @@ class DepartamentosService {
     DevClient client = DevClient();
     ApiResponse response = await client.get(endpoint: '$endpoint/$id');
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
-    return DepartamentoModel.fromJson(response.body);
+    return DepartamentoModel.fromJson(response.body as Map<String, dynamic>);
   }
 
   Future<bool> deleteDepartamento(String id) async {
     DevClient client = DevClient();
     ApiResponse response = await client.delete(endpoint: '$endpoint/$id');
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
     return true;
@@ -62,9 +68,11 @@ class DepartamentosService {
       data: departamento.toJson(),
     );
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
   }
@@ -76,9 +84,11 @@ class DepartamentosService {
       data: departamento.toJson(),
     );
     if (response.statusCode > 299) {
-      String msg = response.body['message'] is List 
-          ? (response.body['message'] as List).join('\n') 
-          : response.body['message'].toString();
+      String msg = response.body is Map && response.body['message'] != null
+          ? (response.body['message'] is List 
+              ? (response.body['message'] as List).join('\n') 
+              : response.body['message'].toString())
+          : response.body.toString();
       throw HttpException(msg);
     }
   }
